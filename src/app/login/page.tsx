@@ -31,7 +31,7 @@ export default function LoginPage() {
     if(cookies?.token) {
       router.push('/');
     }
-  }, []);
+  });
 
   const loginSubmit = async (loginCredentials: LoginCredentials) => {
     try {
