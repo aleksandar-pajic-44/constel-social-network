@@ -1,19 +1,24 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 // Create a new Axios instance with custom defaults
 const axiosInstance = axios.create({
-  baseURL: 'https://api.hr.constel.co/api/v1',
+  baseURL: process.env.DB_HOST,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-if (typeof window !== 'undefined') {
-  // Check if a bearer token is present in localStorage
-  const token = localStorage.getItem('token');
+// Function to set the 'Authorization' header with the token from cookies
+const setAuthHeaderFromCookies = () => {
+  const cookies = new Cookies();
+  const token = cookies.get('token');
+  if (token) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+};
 
-  // If a token is found in localStorage, set it as the default 'Authorization' header
-  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
+// Call the function to set the 'Authorization' header
+setAuthHeaderFromCookies();
 
 export default axiosInstance;
