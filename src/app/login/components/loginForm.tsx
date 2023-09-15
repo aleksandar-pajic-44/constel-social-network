@@ -38,7 +38,8 @@ const LoginForm = ({ errorMessage, onFormSubmit }: { errorMessage?: string, onFo
               type="email"
               placeholder="Enter email here..."
               name="email"
-              aria-describedby="emailHelp"
+              aria-label='Email input field'
+              aria-describedby="emailInput"
               value={values.email}
               onChange={handleChange}
               isInvalid={!!errors.email}
@@ -57,7 +58,8 @@ const LoginForm = ({ errorMessage, onFormSubmit }: { errorMessage?: string, onFo
               type="password"
               placeholder="Enter password here..."
               name="password"
-              aria-describedby="passwordHelp"
+              aria-label='Password input field'
+              aria-describedby="passwordInput"
               value={values.password}
               onChange={handleChange}
               isInvalid={!!errors.password}
@@ -77,7 +79,15 @@ const LoginForm = ({ errorMessage, onFormSubmit }: { errorMessage?: string, onFo
 
           {/* Submit button */}
           <div className='login__submitButton__wrapper'>
-            <Button className='login__submitButton' id='login-submit' type='submit' variant='secondary'>Confirm</Button>
+            <Button
+              id='login-submit'
+              type='submit'
+              className='login__submitButton'
+              variant='secondary'
+              aria-label='Confirm login button'
+              aria-labelledby='loginBtn1'>
+              Confirm
+            </Button>
           </div>
         </Form>
       )}
