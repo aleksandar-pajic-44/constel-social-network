@@ -1,0 +1,35 @@
+input.form-control {
+  border: 1px solid $gray-3;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.625rem;
+
+  &::placeholder {
+    color: $gray-3;
+  }
+}
+
+.btn-primary {
+  --bs-btn-bg: #{$primary};
+  --bs-btn-border-color: #{$primary};
+  --bs-btn-hover-bg: #{$primary-hover};
+  --bs-btn-hover-border-color: #{$primary-hover};
+  --bs-btn-active-bg: #{$primary-hover};
+  --bs-btn-active-border-color: #{$primary-hover};
+  --bs-btn-disabled-bg: #{$primary};
+  --bs-btn-disabled-border-color: #{$primary};
+}
+
+.btn-secondary {
+  --bs-btn-bg: #{$gray-3};
+  --bs-btn-border-color: #{$gray-3};
+  --bs-btn-hover-bg: #{$gray-4};
+  --bs-btn-hover-border-color: #{$gray-4};
+  --bs-btn-active-bg: #{$gray-4};
+  --bs-btn-active-border-color: #{$gray-4};
+  --bs-btn-disabled-bg: #{$gray-3};
+  --bs-btn-disabled-border-color: #{$gray-3};
+}
+
+.btn {
+  --bs-btn-border-radius: 0.625rem;
+}

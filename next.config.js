@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
 
-module.exports = nextConfig
+const nextConfig = {
+  reactStrictMode: false,
+  env: {
+    DB_HOST: process.env.DB_HOST,
+  },
+}
+
+module.exports = nextConfig;
