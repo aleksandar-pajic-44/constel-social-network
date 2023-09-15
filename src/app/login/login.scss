@@ -28,6 +28,10 @@
     padding: 1rem 3.9375rem;
     font-weight: bold;
     font-size: 0.93rem;
+
+    &__wrapper {
+      @include dynamic-flex(center, center);
+    }
   }
 
   &__errorMessage {
