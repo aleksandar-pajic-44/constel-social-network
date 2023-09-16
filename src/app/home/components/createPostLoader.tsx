@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const createPostLoader = ({ count = 1 }: { count?: number }) => (
+const CreatePostLoader = ({ count = 1 }: { count?: number }) => (
   <>
     {Array.from({ length: count }, (_, index) => (
       <ContentLoader
@@ -20,4 +20,4 @@ const createPostLoader = ({ count = 1 }: { count?: number }) => (
   </>
 );
 
-export default createPostLoader;
+export default CreatePostLoader;

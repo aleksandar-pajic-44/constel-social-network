@@ -1,10 +1,15 @@
 import '../home.scss';
 
+import { useState } from 'react';
 import Image from 'next/image';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { parseISO, format } from 'date-fns';
+
+import PostActionButton from './actionButton';
+
+import { likePost, unlikePost } from '../services/user.service';
 
 import { Author } from '../models/post';
 
@@ -12,13 +17,51 @@ export default function FeedPost({
     author,
     timePosted,
     imageUrl,
-    description
+    description,
+    likes,
+    comments,
+    liked,
+    postId
   }: {
     author: Author,
     timePosted: string,
     imageUrl?: string,
-    description: string
+    description: string,
+    likes: number,
+    comments: number,
+    liked: boolean,
+    postId: string
   }) {
+
+  // State to track liked status
+  const [isPostLiked, setIsPostLiked] = useState(liked);
+  const [likesCount, setLikesCount] = useState(likes);
+
+  const toggleLikeStatus = (liked: boolean) => {
+    if (liked) {
+      // If the post is already liked, unlike it
+      unlikePost(postId).then(() => {
+        setIsPostLiked(false);
+
+        // Decrease likes count
+        setLikesCount((prevLikes: number) => prevLikes - 1)
+      })
+      .catch((error: any) => {
+        console.error("Failed to unlike the post:", error);
+      });
+    } else {
+      // If the post is not liked, like it
+      likePost(postId).then(() => {
+        setIsPostLiked(true);
+
+        // Increase likes count
+        setLikesCount((prevLikes: number) => prevLikes + 1)
+      })
+      .catch((error: any) => {
+        console.error("Failed to like the post:", error);
+      });
+    }
+  }
 
   // Parse the timePosted string to a Date object
   const timePostedDate = parseISO(timePosted);
@@ -80,6 +123,26 @@ export default function FeedPost({
 
         {/* Post description */}
         <p className="post-description">{description}</p>
+
+        <div className="post-actions">
+        <PostActionButton
+          count={likesCount}
+          iconType={faHeart}
+          activeStatus={isPostLiked}
+          onButtonClick={() => {
+            toggleLikeStatus(isPostLiked);
+          }}
+        />
+
+        <PostActionButton
+          count={comments}
+          iconType={faComment}
+          onButtonClick={() => {
+            // Should open comments modal
+            console.log('open comments modal');
+          }}
+        />
+        </div>
       </div>
     </div>
   )
