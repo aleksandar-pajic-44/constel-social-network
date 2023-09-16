@@ -1,10 +1,16 @@
 "use client";
 
+// Global styles
 import './assets/styles/_global.scss';
 
+// Font Awesome Icons
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+// React / Next Core
 import Head from 'next/head';
 import { Roboto } from 'next/font/google';
 
+// Third-party libs
 import { CookiesProvider } from 'react-cookie';
 
 const roboto = Roboto({

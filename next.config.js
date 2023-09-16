@@ -5,6 +5,15 @@ const nextConfig = {
   env: {
     DB_HOST: process.env.DB_HOST,
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/home',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig;

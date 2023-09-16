@@ -1,0 +1,113 @@
+@import '/src/app/assets/styles/palette';
+@import '/src/app/assets/styles/mixins';
+
+
+.home {
+  max-width: 85rem;
+  display: grid;
+  grid-template-columns: 18rem 50rem;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  height: 100vh;
+  overflow: hidden;
+
+  &__wrapper {
+    @include dynamic-flex(center, center);
+  }
+
+  &__header {
+    grid-area: 1 / 1 / 2 / 2;
+
+    &__brandingWrapper, &__links {
+      padding: 1rem 2rem;
+    }
+
+    &__links {
+      .nav {
+        @include dynamic-flex(flex-start, center, column, .5rem);
+
+        .nav-item {
+          width: 100%;
+          transition: 500ms all;
+
+          &:hover {
+            background-color: rgba($primary, .15);
+          }
+
+          a {
+            font-weight: 700;
+            font-size: 1.1875rem;
+          }
+
+          svg {
+            margin-right: .5rem;
+            font-size: 1.25rem;
+          }
+        }
+      }
+
+      &__item {
+        width: 100%;
+      }
+    }
+  }
+
+  &__main {
+    grid-area: 1 / 2 / 2 / 3;
+    border-right: 1px solid $gray-2;
+    border-left: 1px solid $gray-2;
+    animation: hideScrollbar 100ms ease-in-out forwards; /* Add an animation effect */
+
+    &.show-scrollbar {
+      overflow-y: auto;
+      animation: showScrollbar 100ms ease-in-out forwards; /* Override the animation when the class is added */
+    }
+
+    @keyframes showScrollbar {
+      from {
+        overflow-y: hidden;
+      }
+      to {
+        overflow-y: auto;
+      }
+    }
+
+    @keyframes hideScrollbar {
+      from {
+        overflow-y: auto;
+      }
+      to {
+        overflow-y: hidden;
+      }
+    }
+
+    &__headingTitle {
+      border-bottom: 1px solid $gray-2;
+      padding: 1rem 2rem;
+      background: $white;
+      position: sticky;
+      z-index: 1;
+      top: 0;
+
+      h1 {
+        font-size: 1.1875rem;
+        margin: 0;
+      }
+    }
+
+    &__feed {
+      @include dynamic-flex(center, center, column, 1.5rem);
+      padding: 2rem;
+      &__post {
+        width: 100%;
+        background-color: $gray-1;
+        border: none;
+
+        .card-body {
+          padding: 2rem;
+        }
+      }
+    }
+  }
+}
