@@ -1,5 +1,6 @@
 @import '/src/app/assets/styles/palette';
 @import '/src/app/assets/styles/mixins';
+@import '/src/app/assets/styles/breakpoints';
 
 .home {
   width: 100%;
@@ -15,6 +16,7 @@
   &__header {
     width: 100%;
     max-width: 17.8125rem;
+    display: none;
 
     &__brandingWrapper, &__links {
       padding: 1rem 2rem;
@@ -48,36 +50,21 @@
         width: 100%;
       }
     }
+
+    @media #{$mobile-l} {
+      display: block;
+    }
   }
 
   &__main {
     width: 100%;
     max-width: 49.75rem;
-    border-right: 1px solid $gray-2;
-    border-left: 1px solid $gray-2;
+    border: none;
     animation: hideScrollbar 100ms ease-in-out forwards; /* Add an animation effect */
 
     &.show-scrollbar {
       overflow-y: auto;
       animation: showScrollbar 100ms ease-in-out forwards; /* Override the animation when the class is added */
-    }
-
-    @keyframes showScrollbar {
-      from {
-        overflow-y: hidden;
-      }
-      to {
-        overflow-y: auto;
-      }
-    }
-
-    @keyframes hideScrollbar {
-      from {
-        overflow-y: auto;
-      }
-      to {
-        overflow-y: hidden;
-      }
     }
 
     &__headingTitle {
@@ -180,6 +167,29 @@
             }
           }
         }
+      }
+    }
+
+    @media #{$mobile-l} {
+      border-right: 1px solid $gray-2;
+      border-left: 1px solid $gray-2;
+    }
+
+    @keyframes showScrollbar {
+      from {
+        overflow-y: hidden;
+      }
+      to {
+        overflow-y: auto;
+      }
+    }
+
+    @keyframes hideScrollbar {
+      from {
+        overflow-y: auto;
+      }
+      to {
+        overflow-y: hidden;
       }
     }
   }
