@@ -141,6 +141,7 @@ export default function Home() {
                         likes={likes}
                         comments={comments}
                         liked={liked}
+                        postId={post_id}
                       />
                     ))}
                   </>

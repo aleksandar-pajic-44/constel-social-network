@@ -7,15 +7,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const PostActionButton = ({
   count,
   iconType,
-  likedStatus
+  activeStatus,
+  onButtonClick
 }: {
   count: number,
   iconType?: IconProp,
-  likedStatus?: boolean
+  activeStatus?: boolean,
+  onButtonClick?: () => void
 }) => (
   <Button
-    variant={likedStatus ? 'primary' : 'tertiary'}
-    disabled={count === 0}
+    variant={activeStatus ? 'primary' : 'tertiary'}
+    onClick={onButtonClick}
   >
     {iconType && (
       <FontAwesomeIcon icon={iconType} />
