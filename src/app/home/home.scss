@@ -170,6 +170,61 @@
             padding-left: 4.5rem;
           }
         }
+
+        &__header {
+          @include dynamic-flex(center, space-between, row);
+          padding: 2rem 2rem 0 2rem;
+
+          .user-informations-wrapper {
+            @include dynamic-flex(center, flex-start, row, .75rem);
+
+            img {
+              object-fit: cover;
+            }
+
+            .user-details {
+              display: flex;
+              flex-direction: column;
+
+              &__username {
+                font-size: 0.875rem;
+                color: $gray-3;
+              }
+
+              &__fullName {
+                font-size: 0.9375rem;
+                font-weight: 700;
+              }
+            }
+          }
+
+          .post-informations {
+            &__timePosted {
+              font-size: 0.875rem;
+              color: $gray-3;
+
+              svg {
+                margin-right: 0.3125rem;
+              }
+            }
+          }
+        }
+
+        &__body {
+          padding: 0.8125rem 2rem 2rem 2rem;
+
+          .post-image {
+            max-width: 100%;
+            object-fit: cover;
+            border-radius: 0.625rem;
+            margin-bottom: 0.75rem;
+          }
+
+          .post-description {
+            font-size: 0.9375rem;
+            margin: 0
+          }
+        }
       }
     }
 

@@ -12,20 +12,22 @@ import Image from 'next/image';
 import ContentLoader from 'react-content-loader';
 
 // Components
-import PageTitle from '../components/head';
 import HomeComponents from './components';
 
 // Services
-import { getUserDetails } from './services/user.service';
+import { getFeedPosts, getUserDetails } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
+import { Post } from './models/post';
+import PageTitle from '../components/head';
 
 export default function Home() {
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
   const [userDetails, setUserDetails] = useState<Account>();
+  const [feedPosts, setFeedPosts] = useState<Post[]>();
   const [cookies] = useCookies(['token']);
 
   const router = useRouter();
@@ -42,6 +44,20 @@ export default function Home() {
     };
 
     fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    const fetchFeedPosts = () => {
+      getFeedPosts()
+        .then((feedPosts: Post[]) => {
+          setFeedPosts(feedPosts);
+        })
+        .catch((error) => {
+          console.error('Error fetching user account details:', error);
+        });
+    };
+
+    fetchFeedPosts();
   }, []);
 
   // Check if user is logged in (if token cookie exists)
@@ -105,30 +121,31 @@ export default function Home() {
             </div>
 
             <div className='home__main__feed'>
+              {/* Create new post section */}
               { userDetails ? (
                 <HomeComponents.CreatePost userAccount={userDetails}/>
               ) : (
-                <ContentLoader
-                  uniqueKey='createPosts'
-                  viewBox="0 0 320 54"
-                  backgroundColor="#f3f3f3"
-                  foregroundColor="#ecebeb"
-                >
-                  <circle cx="27" cy="27" r="18" />
-                  <rect x="53" y="14" rx="3" ry="3" width="180" height="13" />
-                  <rect x="53" y="30" rx="3" ry="3" width="10" height="10" />
-                  <rect x="67" y="30" rx="3" ry="3" width="74" height="10" />
-                  <circle cx="305" cy="27" r="8" />
-                </ContentLoader>
+                // Show content loader if data is not yet loaded
+                <HomeComponents.CreatePostLoader />
               )}
 
-              {/* Feed item */}
-              <div className="home__main__feed__post card">
-                <div className="card-body">
-                  <h4 className="card-title">Title</h4>
-                  <p className="card-text">Pizza ipsum dolor meat lovers buffalo. Pepperoni sausage banana bell ranch and white. Tossed bbq platter sauce platter. Broccoli Hawaiian pineapple style Aussie mozzarella. Pepperoni tomato thin.</p>
-                </div>
-              </div>
+              {/* Feed with posts */}
+                {feedPosts ? (
+                  <>
+                    {feedPosts.map((post: Post) => (
+                      <HomeComponents.FeedPost
+                        key={post.post_id}
+                        author={post.user}
+                        timePosted={post.created_at}
+                        imageUrl={post.image}
+                        description={post.text}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <HomeComponents.FeedPostLoader count={5} />
+                )}
+
             </div>
           </main>
         </section>

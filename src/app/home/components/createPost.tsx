@@ -1,5 +1,3 @@
-"use client";
-
 import '../home.scss';
 
 import Image from 'next/image';
@@ -34,6 +32,8 @@ export default function CreatePost({ userAccount }: { userAccount: Account }) {
             height={48}
             width={48}
             src={userAccount?.picture}
+            aria-label='User Profile Image'
+            aria-labelledby='userProfileImg1'
             alt='User profile image'
           />
 
