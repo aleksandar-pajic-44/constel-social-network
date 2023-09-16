@@ -2,13 +2,14 @@
 
 import Image from 'next/image';
 import './home.scss';
-import { Nav } from 'react-bootstrap';
+import { Button, Form, InputGroup, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { MutableRefObject, useRef } from 'react';
+import { faHome, faMicrophone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { MutableRefObject, useRef, useState } from 'react';
 import PageTitle from '../components/head';
 
 export default function Home() {
+  const [isFocused, setIsFocused] = useState(false);
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   const handleMouseEnter = () => {
@@ -20,6 +21,16 @@ export default function Home() {
     // Remove the class to hide the scrollbar when the user stops hovering
     mainContainerRef?.current.classList.remove('show-scrollbar');
   };
+
+  const handleStatusInputFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleStatusInputBlur = () => {
+    setIsFocused(false);
+  };
+
+  const inputClass = `profile__input ${isFocused ? 'profile__input--focused' : ''}`;
 
   return (
     <>
@@ -68,8 +79,36 @@ export default function Home() {
               {/* New post */}
               <div className="home__main__feed__post card">
                 <div className="card-body">
+                  {/* Status input section */}
+                  <div className='home__main__feed__post__status'>
+                    {/* Load user profile image */}
+                    <Image
+                      className='profile__image rounded-circle'
+                      height={48}
+                      width={48}
+                      src="/images/profile.avif"
+                      alt='User profile image'
+                    />
 
-                  <p className="card-text">Pizza ipsum dolor meat lovers buffalo. Pepperoni sausage banana bell ranch and white. Tossed bbq platter sauce platter. Broccoli Hawaiian pineapple style Aussie mozzarella. Pepperoni tomato thin.</p>
+                    {/* Input field */}
+                    <InputGroup className={inputClass}>
+                      <Form.Control
+                        placeholder="Recipient's username"
+                        aria-label="Recipient's username with two button addons"
+                        onFocus={handleStatusInputFocus}
+                        onBlur={handleStatusInputBlur}
+                      />
+                      <Button variant="light">
+                        <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
+                      </Button>
+                    </InputGroup>
+                  </div>
+
+                  {/* Record action section */}
+                  <div className='home__main__feed__post__record'>
+                    <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
+                    <Button className='record__button' variant='secondary'>New post</Button>
+                  </div>
                 </div>
               </div>
 

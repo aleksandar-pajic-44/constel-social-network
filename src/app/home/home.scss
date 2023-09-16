@@ -97,6 +97,7 @@
     &__feed {
       @include dynamic-flex(center, center, column, 1.5rem);
       padding: 2rem;
+
       &__post {
         width: 100%;
         background-color: $gray-1;
@@ -104,6 +105,80 @@
 
         .card-body {
           padding: 2rem;
+        }
+
+        &__status {
+          @include dynamic-flex(center, center, row, 1.25rem);
+
+          .profile {
+            &__image {
+              object-fit: cover
+            }
+
+            &__input {
+              border-bottom: 1px solid $gray-2;
+
+              &--focused {
+                border-bottom: 1px solid $primary;
+
+                button.btn {
+                  svg {
+                    color: $primary;
+                  }
+                }
+              }
+
+              button, input {
+                border-radius: 0;
+              }
+
+              input {
+                padding: 0.875rem 0;
+                border: none;
+                background-color: $gray-1;
+              }
+
+              .form-control:focus {
+                box-shadow: 0px 1px 0px 0px $primary;
+              }
+
+              .btn {
+                background-color: transparent;
+
+                &:hover {
+                  border-color: $gray-1;
+
+                  svg {
+                    color: $primary;
+                  }
+                }
+
+                svg {
+                  color: $gray-3;
+                  font-size: 1.1875rem
+                }
+              }
+            }
+          }
+        }
+
+        &__record {
+          @include dynamic-flex(center, space-between, row);
+          padding-left: 4.5rem;
+          margin-top: 1rem;
+
+          .record {
+            &__button {
+              padding: 1rem 3.625rem;
+              font-weight: bold;
+              font-size: 0.9375rem;
+            }
+
+            &__icon {
+              color: $primary;
+              font-size: 1.5rem;
+            }
+          }
         }
       }
     }
