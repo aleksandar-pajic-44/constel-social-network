@@ -151,7 +151,6 @@
 
         &__record {
           @include dynamic-flex(center, space-between, row);
-          padding-left: 4.5rem;
           margin-top: 1rem;
 
           .record {
@@ -165,6 +164,10 @@
               color: $primary;
               font-size: 1.5rem;
             }
+          }
+
+          @media #{$mobile-m} {
+            padding-left: 4.5rem;
           }
         }
       }

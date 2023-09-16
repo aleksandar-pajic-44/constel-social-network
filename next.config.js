@@ -14,6 +14,9 @@ const nextConfig = {
       },
     ]
   },
+  images: {
+    domains: ['constel-hr-frontend.s3.eu-central-1.amazonaws.com'],
+  },
 }
 
 module.exports = nextConfig;

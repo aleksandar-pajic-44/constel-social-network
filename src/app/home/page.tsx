@@ -2,15 +2,32 @@
 
 import Image from 'next/image';
 import './home.scss';
-import { Button, Form, InputGroup, Nav } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faMicrophone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { MutableRefObject, useRef, useState } from 'react';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import PageTitle from '../components/head';
+import HomeComponents from './components';
+import { Account } from '../login/models/login';
+import { getUserDetails } from './services/user.service';
 
 export default function Home() {
-  const [isFocused, setIsFocused] = useState(false);
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const [userDetails, setUserDetails] = useState<Account>();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userAccountDetails = await getUserDetails();
+        // Do something with userAccountDetails
+        setUserDetails(userAccountDetails);
+      } catch (error) {
+        console.error('Error fetching user account details:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleMouseEnter = () => {
     // Add a class to show the scrollbar when the user hovers over the container
@@ -21,16 +38,6 @@ export default function Home() {
     // Remove the class to hide the scrollbar when the user stops hovering
     mainContainerRef?.current.classList.remove('show-scrollbar');
   };
-
-  const handleStatusInputFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleStatusInputBlur = () => {
-    setIsFocused(false);
-  };
-
-  const inputClass = `profile__input ${isFocused ? 'profile__input--focused' : ''}`;
 
   return (
     <>
@@ -76,41 +83,9 @@ export default function Home() {
             </div>
 
             <div className='home__main__feed'>
-              {/* New post */}
-              <div className="home__main__feed__post card">
-                <div className="card-body">
-                  {/* Status input section */}
-                  <div className='home__main__feed__post__status'>
-                    {/* Load user profile image */}
-                    <Image
-                      className='profile__image rounded-circle'
-                      height={48}
-                      width={48}
-                      src="/images/profile.avif"
-                      alt='User profile image'
-                    />
-
-                    {/* Input field */}
-                    <InputGroup className={inputClass}>
-                      <Form.Control
-                        placeholder="Recipient's username"
-                        aria-label="Recipient's username with two button addons"
-                        onFocus={handleStatusInputFocus}
-                        onBlur={handleStatusInputBlur}
-                      />
-                      <Button variant="light">
-                        <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
-                      </Button>
-                    </InputGroup>
-                  </div>
-
-                  {/* Record action section */}
-                  <div className='home__main__feed__post__record'>
-                    <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
-                    <Button className='record__button' variant='secondary'>New post</Button>
-                  </div>
-                </div>
-              </div>
+              { userDetails && (
+                <HomeComponents.CreatePost userAccount={userDetails}/>
+              )}
 
               {/* Feed item */}
               <div className="home__main__feed__post card">

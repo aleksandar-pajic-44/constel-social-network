@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
 const setAuthHeaderFromCookies = () => {
   const cookies = new Cookies();
   const token = cookies.get('token');
+
   if (token) {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }

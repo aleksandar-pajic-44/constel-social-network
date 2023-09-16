@@ -16,7 +16,7 @@ import { Toast, ToastContainer } from 'react-bootstrap';
 import LoginComponents from './components';
 
 // Services
-import { loginUser } from './services/login';
+import { loginUser } from './services/login.service';
 
 // Models & Enums
 import { LOGIN_STATUS, LoginCredentials } from './models/login';
@@ -64,7 +64,7 @@ export default function LoginPage() {
     // Navigate to new page after successful login
     setTimeout(() => {
       router.push('/');
-    }, 2000);
+    }, 3000);
   }
 
   const setTokenCookie = (token: string) => {
