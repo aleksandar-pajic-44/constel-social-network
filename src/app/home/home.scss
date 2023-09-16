@@ -233,6 +233,7 @@
 
             button.btn {
               @include dynamic-flex(center, center, row);
+
               svg {
                 margin-right: .75rem;
                 font-size: 1.1875rem;
