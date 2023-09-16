@@ -3,8 +3,10 @@ import '../home.scss';
 import Image from 'next/image';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { parseISO, format } from 'date-fns';
+
+import PostActionButton from './actionButton';
 
 import { Author } from '../models/post';
 
@@ -12,12 +14,18 @@ export default function FeedPost({
     author,
     timePosted,
     imageUrl,
-    description
+    description,
+    likes,
+    comments,
+    liked
   }: {
     author: Author,
     timePosted: string,
     imageUrl?: string,
-    description: string
+    description: string,
+    likes: number,
+    comments: number,
+    liked: boolean
   }) {
 
   // Parse the timePosted string to a Date object
@@ -80,6 +88,15 @@ export default function FeedPost({
 
         {/* Post description */}
         <p className="post-description">{description}</p>
+
+        <div className="post-actions">
+        <PostActionButton
+          count={likes}
+          iconType={faHeart}
+          likedStatus={liked}
+        />
+        <PostActionButton count={comments} iconType={faComment}/>
+        </div>
       </div>
     </div>
   )

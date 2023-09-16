@@ -225,6 +225,20 @@
             font-size: 0.9375rem;
             margin: 0
           }
+
+          .post-actions {
+            @include dynamic-flex(center, flex-start, row, 1rem);
+
+            margin-top: .75rem;
+
+            button.btn {
+              @include dynamic-flex(center, center, row);
+              svg {
+                margin-right: .75rem;
+                font-size: 1.1875rem;
+              }
+            }
+          }
         }
       }
     }

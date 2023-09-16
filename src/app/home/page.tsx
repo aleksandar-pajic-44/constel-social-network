@@ -119,8 +119,8 @@ export default function Home() {
               <h1>Home</h1>
             </div>
 
+            {/* Main feed section */}
             <div className='home__main__feed'>
-              {/* Create new post section */}
               { userDetails ? (
                 <HomeComponents.CreatePost userAccount={userDetails}/>
               ) : (
@@ -131,20 +131,22 @@ export default function Home() {
               {/* Feed with posts */}
                 {feedPosts ? (
                   <>
-                    {feedPosts.map(({ post_id, user, created_at, image, text }: Post) => (
+                    {feedPosts.map(({ post_id, user, created_at, image, text, likes, comments, liked }: Post) => (
                       <HomeComponents.FeedPost
                         key={post_id}
                         author={user}
                         timePosted={created_at}
                         imageUrl={image}
                         description={text}
+                        likes={likes}
+                        comments={comments}
+                        liked={liked}
                       />
                     ))}
                   </>
                 ) : (
                   <HomeComponents.FeedPostLoader count={5} />
                 )}
-
             </div>
           </main>
         </section>
