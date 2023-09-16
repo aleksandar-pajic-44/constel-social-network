@@ -7,13 +7,14 @@ const createPostLoader = ({ count = 1 }: { count?: number }) => (
       <ContentLoader
         key={index}
         uniqueKey='createPosts'
-        viewBox="0 0 320 80"
+        viewBox="0 0 320 70"
       >
-        <circle cx="20" cy="33" r="18" />
-        <rect x="50" y="20" rx="3" ry="3" width="220" height="25" />
-        <rect x="280" y="20" rx="3" ry="3" width="25" height="25" />
-        <rect x="235" y="50" rx="3" ry="3" width="70" height="25" />
-        <circle cx="60" cy="65" r="10" />
+        <circle cx="20" cy="19" r="15" />
+        <rect x="50" y="10" rx="3" ry="3" width="240" height="20" />
+        <rect x="295" y="10" rx="3" ry="3" width="20" height="20" />
+        <rect x="5" y="40" rx="3" ry="3" width="310" height="0.5" />
+        <rect x="245" y="46" rx="3" ry="3" width="70" height="20" />
+        <circle cx="60" cy="57" r="10" />
       </ContentLoader>
     ))}
   </>
