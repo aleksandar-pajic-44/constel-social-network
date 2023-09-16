@@ -8,6 +8,18 @@ input.form-control {
   }
 }
 
+.form-control {
+  &:focus {
+    border-color: $primary;
+    outline: 0;
+    box-shadow: 0 0 0 0.04rem $primary;
+  }
+
+  &.is-invalid:focus {
+    box-shadow: 0 0 0 0.05rem $danger;
+  }
+}
+
 .btn-primary {
   --bs-btn-bg: #{$primary};
   --bs-btn-border-color: #{$primary};
@@ -32,4 +44,36 @@ input.form-control {
 
 .btn {
   --bs-btn-border-radius: 0.625rem;
+}
+
+
+.nav {
+  --bs-nav-link-color: #{$primary};
+  --bs-nav-link-hover-color: #{$primary};
+
+  .nav-item {
+    border-radius: 0.625rem;
+  }
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: $gray-2 $white;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 13px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $white;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $gray-2;
+  border-radius: 10px;
+  border: 3px solid $white;
 }

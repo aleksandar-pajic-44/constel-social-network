@@ -10,14 +10,16 @@ import './login.scss';
 
 // Third-party libs
 import { useCookies } from 'react-cookie';
+import { Toast, ToastContainer } from 'react-bootstrap';
+
+// Components
+import LoginComponents from './components';
 
 // Services
-import { loginUser } from './services/login';
+import { loginUser } from './services/login.service';
 
 // Models & Enums
 import { LOGIN_STATUS, LoginCredentials } from './models/login';
-import LoginForm from './components/loginForm';
-import { Toast, ToastContainer } from 'react-bootstrap';
 
 export default function LoginPage() {
   const [cookies, setCookie] = useCookies(['token']);
@@ -31,30 +33,29 @@ export default function LoginPage() {
     if(cookies?.token) {
       router.push('/');
     }
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const loginSubmit = async (loginCredentials: LoginCredentials) => {
-    try {
-      // Call Login POST service
-      const loginData = await loginUser(loginCredentials);
-      const { token } = loginData?.data;
+  const loginSubmit = (loginCredentials: LoginCredentials) => {
+    loginUser(loginCredentials)
+      .then((loginData) => {
+        const { token } = loginData?.data;
 
-      // Set token as a cookie
-      setTokenCookie(token);
+        // Set token as a cookie
+        setTokenCookie(token);
 
-      // Show toast and redirect
-      handleSuccessfulLogin();
-    } catch (error: any) {
-      const { errorMessage } = error;
-
-      if (errorMessage?.status === LOGIN_STATUS.INVALID_CREDENTIALS) {
-        setErrorMessage(errorMessage.data.error.message);
-        return;
-      }
-
-      setErrorMessage('An error occurred during login.');
-    }
+        // Show toast and redirect
+        handleSuccessfulLogin();
+      })
+      .catch((error: any) => {
+        if (error.errorMessage?.status === LOGIN_STATUS.INVALID_CREDENTIALS) {
+          setErrorMessage(error.errorMessage.data.error.message);
+        } else {
+          setErrorMessage('An error occurred during login.');
+        }
+      });
   };
+
 
   const handleSuccessfulLogin = () => {
     setShowSuccessToast(true);
@@ -62,7 +63,7 @@ export default function LoginPage() {
     // Navigate to new page after successful login
     setTimeout(() => {
       router.push('/');
-    }, 2000);
+    }, 2500);
   }
 
   const setTokenCookie = (token: string) => {
@@ -91,7 +92,7 @@ export default function LoginPage() {
       />
 
       {/* Login form component */}
-      <LoginForm errorMessage={errorMessage} onFormSubmit={loginSubmit}/>
+      <LoginComponents.LoginForm errorMessage={errorMessage} onFormSubmit={loginSubmit}/>
 
       {/* Toast message */}
       <ToastContainer position={'bottom-center'} className='mb-3'>

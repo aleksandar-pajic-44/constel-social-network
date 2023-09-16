@@ -1,0 +1,255 @@
+@import '/src/app/assets/styles/palette';
+@import '/src/app/assets/styles/mixins';
+@import '/src/app/assets/styles/breakpoints';
+
+.home {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+
+  &__wrapper {
+    @include dynamic-flex(center, center);
+  }
+
+  &__header {
+    width: 100%;
+    max-width: 17.8125rem;
+    display: none;
+
+    &__brandingWrapper, &__links {
+      padding: 1rem 2rem;
+    }
+
+    &__links {
+      .nav {
+        @include dynamic-flex(flex-start, center, column, .5rem);
+
+        .nav-item {
+          width: 100%;
+          transition: 250ms all;
+
+          &:hover {
+            background-color: rgba($primary, .15);
+          }
+
+          a {
+            font-weight: 700;
+            font-size: 1.1875rem;
+          }
+
+          svg {
+            margin-right: .5rem;
+            font-size: 1.25rem;
+          }
+        }
+      }
+
+      &__item {
+        width: 100%;
+      }
+    }
+
+    @media #{$mobile-l} {
+      display: block;
+    }
+  }
+
+  &__main {
+    width: 100%;
+    max-width: 49.75rem;
+    border: none;
+    animation: hideScrollbar 100ms ease-in-out forwards; /* Add an animation effect */
+
+    &.show-scrollbar {
+      overflow-y: auto;
+      animation: showScrollbar 100ms ease-in-out forwards; /* Override the animation when the class is added */
+    }
+
+    &__headingTitle {
+      border-bottom: 1px solid $gray-2;
+      padding: 1rem 2rem;
+      background: $white;
+      position: sticky;
+      z-index: 1;
+      top: 0;
+
+      h1 {
+        font-size: 1.1875rem;
+        margin: 0;
+      }
+    }
+
+    &__feed {
+      @include dynamic-flex(center, center, column, 1.5rem);
+      padding: 2rem;
+
+      &__post {
+        width: 100%;
+        background-color: $gray-1;
+        border: none;
+
+        .card-body {
+          padding: 2rem;
+        }
+
+        &__status {
+          @include dynamic-flex(center, center, row, 1.25rem);
+
+          .profile {
+            &__image {
+              object-fit: cover
+            }
+
+            &__input {
+              border-bottom: 1px solid $gray-2;
+
+              &--focused {
+                border-bottom: 1px solid $primary;
+
+                button.btn {
+                  svg {
+                    color: $primary;
+                  }
+                }
+              }
+
+              button, input {
+                border-radius: 0;
+              }
+
+              input {
+                padding: 0.875rem 0;
+                border: none;
+                background-color: $gray-1;
+              }
+
+              .form-control:focus {
+                box-shadow: 0px 1px 0px 0px $primary;
+              }
+
+              .btn {
+                background-color: transparent;
+
+                &:hover {
+                  border-color: $gray-1;
+
+                  svg {
+                    color: $primary;
+                  }
+                }
+
+                svg {
+                  color: $gray-3;
+                  font-size: 1.1875rem
+                }
+              }
+            }
+          }
+        }
+
+        &__record {
+          @include dynamic-flex(center, space-between, row);
+          margin-top: 1rem;
+
+          .record {
+            &__button {
+              padding: 1rem 3.625rem;
+              font-weight: bold;
+              font-size: 0.9375rem;
+            }
+
+            &__icon {
+              color: $primary;
+              font-size: 1.5rem;
+            }
+          }
+
+          @media #{$mobile-m} {
+            padding-left: 4.5rem;
+          }
+        }
+
+        &__header {
+          @include dynamic-flex(center, space-between, row);
+          padding: 2rem 2rem 0 2rem;
+
+          .user-informations-wrapper {
+            @include dynamic-flex(center, flex-start, row, .75rem);
+
+            img {
+              object-fit: cover;
+            }
+
+            .user-details {
+              display: flex;
+              flex-direction: column;
+
+              &__username {
+                font-size: 0.875rem;
+                color: $gray-3;
+              }
+
+              &__fullName {
+                font-size: 0.9375rem;
+                font-weight: 700;
+              }
+            }
+          }
+
+          .post-informations {
+            &__timePosted {
+              font-size: 0.875rem;
+              color: $gray-3;
+
+              svg {
+                margin-right: 0.3125rem;
+              }
+            }
+          }
+        }
+
+        &__body {
+          padding: 0.8125rem 2rem 2rem 2rem;
+
+          .post-image {
+            max-width: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 0.625rem;
+            margin-bottom: 0.75rem;
+          }
+
+          .post-description {
+            font-size: 0.9375rem;
+            margin: 0
+          }
+        }
+      }
+    }
+
+    @media #{$mobile-l} {
+      border-right: 1px solid $gray-2;
+      border-left: 1px solid $gray-2;
+    }
+
+    @keyframes showScrollbar {
+      from {
+        overflow-y: hidden;
+      }
+      to {
+        overflow-y: auto;
+      }
+    }
+
+    @keyframes hideScrollbar {
+      from {
+        overflow-y: auto;
+      }
+      to {
+        overflow-y: hidden;
+      }
+    }
+  }
+}

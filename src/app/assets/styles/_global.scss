@@ -1,8 +1,11 @@
 // Boostrap CSS
 @import 'bootstrap/dist/css/bootstrap.css';
 
-// palette.scss
+// Palette SCSS
 @import './palette';
 
 // Custom SCSS
 @import './custom';
+
+// Breakpoints SCSS
+@import './breakpoints';
