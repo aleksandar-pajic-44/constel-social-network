@@ -7,11 +7,11 @@ import './assets/styles/_global.scss';
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 // React / Next Core
-import Head from 'next/head';
 import { Roboto } from 'next/font/google';
 
 // Third-party libs
 import { CookiesProvider } from 'react-cookie';
+import PageTitle from './components/head';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -26,9 +26,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <PageTitle title='/' />
 
       <body className={roboto.className}>
         <CookiesProvider defaultSetOptions={{ path: '/'}}>
