@@ -11,7 +11,9 @@ import { Roboto } from 'next/font/google';
 
 // Third-party libs
 import { CookiesProvider } from 'react-cookie';
-import PageTitle from './components/head';
+
+// Components
+import SharedComponents from './components';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -26,7 +28,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <PageTitle title='/' />
+      <SharedComponents.PageTitle />
 
       <body className={roboto.className}>
         <CookiesProvider defaultSetOptions={{ path: '/'}}>

@@ -10,14 +10,16 @@ import './login.scss';
 
 // Third-party libs
 import { useCookies } from 'react-cookie';
+import { Toast, ToastContainer } from 'react-bootstrap';
+
+// Components
+import LoginComponents from './components';
 
 // Services
 import { loginUser } from './services/login';
 
 // Models & Enums
 import { LOGIN_STATUS, LoginCredentials } from './models/login';
-import LoginForm from './components/loginForm';
-import { Toast, ToastContainer } from 'react-bootstrap';
 
 export default function LoginPage() {
   const [cookies, setCookie] = useCookies(['token']);
@@ -91,7 +93,7 @@ export default function LoginPage() {
       />
 
       {/* Login form component */}
-      <LoginForm errorMessage={errorMessage} onFormSubmit={loginSubmit}/>
+      <LoginComponents.LoginForm errorMessage={errorMessage} onFormSubmit={loginSubmit}/>
 
       {/* Toast message */}
       <ToastContainer position={'bottom-center'} className='mb-3'>
