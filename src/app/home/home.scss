@@ -28,7 +28,7 @@
 
         .nav-item {
           width: 100%;
-          transition: 500ms all;
+          transition: 250ms all;
 
           &:hover {
             background-color: rgba($primary, .15);
@@ -215,6 +215,7 @@
 
           .post-image {
             max-width: 100%;
+            width: 100%;
             object-fit: cover;
             border-radius: 0.625rem;
             margin-bottom: 0.75rem;

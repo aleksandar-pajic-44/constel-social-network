@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { MutableRefObject, useRef } from 'react';
 import Image from 'next/image';
-import ContentLoader from 'react-content-loader';
 
 // Components
 import HomeComponents from './components';
@@ -132,13 +131,13 @@ export default function Home() {
               {/* Feed with posts */}
                 {feedPosts ? (
                   <>
-                    {feedPosts.map((post: Post) => (
+                    {feedPosts.map(({ post_id, user, created_at, image, text }: Post) => (
                       <HomeComponents.FeedPost
-                        key={post.post_id}
-                        author={post.user}
-                        timePosted={post.created_at}
-                        imageUrl={post.image}
-                        description={post.text}
+                        key={post_id}
+                        author={user}
+                        timePosted={created_at}
+                        imageUrl={image}
+                        description={text}
                       />
                     ))}
                   </>

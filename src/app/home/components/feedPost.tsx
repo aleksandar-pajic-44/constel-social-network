@@ -45,7 +45,7 @@ export default function FeedPost({
 
           {/* Author details */}
           <div className="user-details">
-            <span className='user-details__username'>{author?.username}</span>
+            <span className='user-details__username'>@{author?.username}</span>
             <span className='user-details__fullName'>{author?.full_name}</span>
           </div>
         </div>
@@ -66,12 +66,15 @@ export default function FeedPost({
           <Image
             id='post-image'
             src={imageUrl}
+            priority={true}
+            fetchPriority={'high'}
             width={668}
             height={285}
             className='post-image'
             aria-label='Post image'
             aria-labelledby='postImage'
             alt="Author's post image"
+            suppressHydrationWarning
           />
         )}
 
