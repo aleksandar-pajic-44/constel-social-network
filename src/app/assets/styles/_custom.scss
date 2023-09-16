@@ -8,6 +8,18 @@ input.form-control {
   }
 }
 
+.form-control {
+  &:focus {
+    border-color: $primary;
+    outline: 0;
+    box-shadow: 0 0 0 0.04rem $primary;
+  }
+
+  &.is-invalid:focus {
+    box-shadow: 0 0 0 0.05rem $danger;
+  }
+}
+
 .btn-primary {
   --bs-btn-bg: #{$primary};
   --bs-btn-border-color: #{$primary};
@@ -33,6 +45,7 @@ input.form-control {
 .btn {
   --bs-btn-border-radius: 0.625rem;
 }
+
 
 .nav {
   --bs-nav-link-color: #{$primary};
