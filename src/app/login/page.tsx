@@ -33,30 +33,28 @@ export default function LoginPage() {
     if(cookies?.token) {
       router.push('/');
     }
-  });
+  }, []);
 
-  const loginSubmit = async (loginCredentials: LoginCredentials) => {
-    try {
-      // Call Login POST service
-      const loginData = await loginUser(loginCredentials);
-      const { token } = loginData?.data;
+  const loginSubmit = (loginCredentials: LoginCredentials) => {
+    loginUser(loginCredentials)
+      .then((loginData) => {
+        const { token } = loginData?.data;
 
-      // Set token as a cookie
-      setTokenCookie(token);
+        // Set token as a cookie
+        setTokenCookie(token);
 
-      // Show toast and redirect
-      handleSuccessfulLogin();
-    } catch (error: any) {
-      const { errorMessage } = error;
-
-      if (errorMessage?.status === LOGIN_STATUS.INVALID_CREDENTIALS) {
-        setErrorMessage(errorMessage.data.error.message);
-        return;
-      }
-
-      setErrorMessage('An error occurred during login.');
-    }
+        // Show toast and redirect
+        handleSuccessfulLogin();
+      })
+      .catch((error: any) => {
+        if (error.errorMessage?.status === LOGIN_STATUS.INVALID_CREDENTIALS) {
+          setErrorMessage(error.errorMessage.data.error.message);
+        } else {
+          setErrorMessage('An error occurred during login.');
+        }
+      });
   };
+
 
   const handleSuccessfulLogin = () => {
     setShowSuccessToast(true);
@@ -64,7 +62,7 @@ export default function LoginPage() {
     // Navigate to new page after successful login
     setTimeout(() => {
       router.push('/');
-    }, 3000);
+    }, 2500);
   }
 
   const setTokenCookie = (token: string) => {

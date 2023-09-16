@@ -1,33 +1,55 @@
 "use client";
 
-import Image from 'next/image';
-import './home.scss';
+// React Core
+import React, { useEffect, useState } from 'react';
+
+// Third-party libraries
 import { Nav } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useRef } from 'react';
+import Image from 'next/image';
+import ContentLoader from 'react-content-loader';
+
+// Components
 import PageTitle from '../components/head';
 import HomeComponents from './components';
-import { Account } from '../login/models/login';
+
+// Services
 import { getUserDetails } from './services/user.service';
+
+// Models
+import { Account } from '../login/models/login';
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
   const [userDetails, setUserDetails] = useState<Account>();
+  const [cookies] = useCookies(['token']);
+
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userAccountDetails = await getUserDetails();
-        // Do something with userAccountDetails
-        setUserDetails(userAccountDetails);
-      } catch (error) {
-        console.error('Error fetching user account details:', error);
-      }
+    const fetchUserData = () => {
+      getUserDetails()
+        .then((userAccountDetails) => {
+          setUserDetails(userAccountDetails);
+        })
+        .catch((error) => {
+          console.error('Error fetching user account details:', error);
+        });
     };
 
     fetchUserData();
   }, []);
+
+  // Check if user is logged in (if token cookie exists)
+  useEffect(() => {
+    if(!cookies?.token) {
+      router.push('/login');
+    }
+  });
 
   const handleMouseEnter = () => {
     // Add a class to show the scrollbar when the user hovers over the container
@@ -83,8 +105,21 @@ export default function Home() {
             </div>
 
             <div className='home__main__feed'>
-              { userDetails && (
+              { userDetails ? (
                 <HomeComponents.CreatePost userAccount={userDetails}/>
+              ) : (
+                <ContentLoader
+                  uniqueKey='createPosts'
+                  viewBox="0 0 320 54"
+                  backgroundColor="#f3f3f3"
+                  foregroundColor="#ecebeb"
+                >
+                  <circle cx="27" cy="27" r="18" />
+                  <rect x="53" y="14" rx="3" ry="3" width="180" height="13" />
+                  <rect x="53" y="30" rx="3" ry="3" width="10" height="10" />
+                  <rect x="67" y="30" rx="3" ry="3" width="74" height="10" />
+                  <circle cx="305" cy="27" r="8" />
+                </ContentLoader>
               )}
 
               {/* Feed item */}
