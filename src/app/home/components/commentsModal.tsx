@@ -18,7 +18,8 @@ function PostCommentsModal({
   likes,
   comments,
   liked,
-  postId
+  postId,
+  children
 }: {
   author: Author,
   timePosted: string,
@@ -28,6 +29,7 @@ function PostCommentsModal({
   comments: number,
   liked: boolean,
   postId: string,
+  children?: React.ReactNode
 }) {
   const [showCommentsModal, setShowCommentsModal] = useState(false);
 
@@ -62,7 +64,7 @@ function PostCommentsModal({
               fetchPriority={'high'}
               width={668}
               height={285}
-              className='post-image'
+              className='post__image'
               aria-label={`${author?.full_name} post image`}
               aria-labelledby={`${author?.username}PostImage`}
               alt={`${author?.full_name} post image`}
@@ -71,7 +73,15 @@ function PostCommentsModal({
 
           <PostTimePosted timePosted={timePosted}/>
 
-          <p className="post-description post-description--modal">{description}</p>
+          <p className="post__description post__description--modal">{description}</p>
+
+          <div className='post__actions'>
+            {children}
+          </div>
+
+          <div className='post__comments'>
+            <h2 className='post__comments__title'>{comments} comments</h2>
+          </div>
         </Modal.Body>
       </Modal>
     </>

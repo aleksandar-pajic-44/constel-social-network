@@ -90,7 +90,7 @@ export default function FeedPost({
             fetchPriority={'high'}
             width={668}
             height={285}
-            className='post-image'
+            className='post__image'
             aria-label={`${author?.full_name} post image`}
             aria-labelledby={`${author?.username}PostImage`}
             alt={`${author?.full_name} post image`}
@@ -98,9 +98,9 @@ export default function FeedPost({
         )}
 
         {/* Post description */}
-        <p className="post-description">{description}</p>
+        <p className="post__description">{description}</p>
 
-        <div className="post-actions">
+        <div className="post__actions">
           <PostActionButton
             count={likesCount}
             iconType={faHeart}
@@ -120,7 +120,21 @@ export default function FeedPost({
             comments={comments}
             liked={liked}
             postId={postId}
-          />
+          >
+            <PostActionButton
+              count={likesCount}
+              iconType={faHeart}
+              activeStatus={isPostLiked}
+              onButtonClick={() => {
+                toggleLikeStatus(isPostLiked);
+              }}
+            />
+
+            <PostActionButton
+              count={comments}
+              iconType={faComment}
+            />
+          </PostCommentsModal>
         </div>
       </div>
     </div>

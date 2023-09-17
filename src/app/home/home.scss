@@ -89,6 +89,7 @@
         width: 100%;
         background-color: $gray-1;
         border: none;
+        border-radius: .625rem;
 
         .card-body {
           padding: 2rem;
@@ -230,45 +231,57 @@
   }
 }
 
-.post-informations {
-  &__timePosted {
-    font-size: .875rem;
-    color: $gray-3;
+.post {
+  &__informations {
+    &__timePosted {
+      font-size: .875rem;
+      color: $gray-3;
 
-    svg {
-      margin-right: .3125rem;
+      svg {
+        margin-right: .3125rem;
+      }
     }
   }
-}
 
-.post-image {
-  max-width: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: .625rem;
-  margin-bottom: .75rem;
-}
-
-.post-description {
-  font-size: .9375rem;
-  margin: 0;
-
-  &--modal {
-    margin-top: .5rem;
+  &__image {
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: .625rem;
+    margin-bottom: .75rem;
   }
-}
 
-.post-actions {
-  @include dynamic-flex(center, flex-start, row, 1rem);
+  &__description {
+    font-size: .9375rem;
+    margin: 0;
 
-  margin-top: .75rem;
+    &--modal {
+      margin-top: .5rem;
+    }
+  }
 
-  button.btn {
-    @include dynamic-flex(center, center, row);
+  &__actions {
+    @include dynamic-flex(center, flex-start, row, 1rem);
 
-    svg {
-      margin-right: .75rem;
+    margin-top: .75rem;
+
+    button.btn {
+      @include dynamic-flex(center, center, row);
+
+      svg {
+        margin-right: .75rem;
+        font-size: 1.1875rem;
+      }
+    }
+  }
+
+  &__comments {
+    margin: 1.5rem 0 1.5rem 0;
+
+    &__title {
       font-size: 1.1875rem;
+      font-weight: 700;
+      margin-bottom: 0;
     }
   }
 }
@@ -282,10 +295,7 @@
     padding: 1rem 2rem 2rem 2rem;
     @include dynamic-flex(flex-start, center, column);
 
-    .post-image {
-      width: 100%;
-      object-fit: cover;
-      border-radius: .625rem;
+    .post__image {
       margin-bottom: 1rem;
     }
   }
@@ -293,5 +303,11 @@
   &__header {
     padding: 2rem 2rem 0 2rem;
     border-bottom: none;
+  }
+}
+
+button.btn {
+  svg {
+    margin-right: .75rem;
   }
 }

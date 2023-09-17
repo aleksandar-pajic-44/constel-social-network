@@ -12,8 +12,8 @@ const PostTimePosted = ({ timePosted }: { timePosted: string }) => {
   const formattedTimePosted = format(timePostedDate, 'dd.MM.yyyy');
 
   return (
-    <div className="post-informations">
-      <span className="post-informations__timePosted">
+    <div className="post__informations">
+      <span className="post__informations__timePosted">
         <FontAwesomeIcon icon={faCalendar} />
         {formattedTimePosted}
       </span>
