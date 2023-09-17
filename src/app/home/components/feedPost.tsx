@@ -25,6 +25,7 @@ export default function FeedPost({
   postComments,
   commentsLoaded,
   fetchPostComments,
+  toggleLikeStatus,
   onCreateCommentSubmit
 }: {
   author: Author,
@@ -38,6 +39,7 @@ export default function FeedPost({
   postComments: PostComment[],
   commentsLoaded: boolean,
   fetchPostComments: (postId: string) => void,
+  toggleLikeStatus: (postId: string, isLiked: boolean) => void,
   onCreateCommentSubmit: (postId: string, text: string) => void
 }) {
 
@@ -52,26 +54,18 @@ export default function FeedPost({
     setUpdatedPostComments(postComments);
   }, [postComments]);
 
-  const toggleLikeStatus = (liked: boolean) => {
-    const action = liked ? 'unlike' : 'like';
-
-    likeOrUnlikePost(postId, liked).then(() => {
-      setIsPostLiked(!liked);
-      setLikesCount((prevLikes: number) => liked ? prevLikes - 1 : prevLikes + 1);
-    })
-    .catch((error: any) => {
-      console.error(`Failed to ${action} the post:`, error);
-    });
-  }
-
-  const likesActionButton = () => {
+  const likesActionButton = (): React.ReactNode => {
     return (
       <PostActionButton
         count={likesCount}
         iconType={faHeart}
         activeStatus={isPostLiked}
         onButtonClick={() => {
-          toggleLikeStatus(isPostLiked);
+          toggleLikeStatus(postId, isPostLiked);
+
+          // Update post isLiked state and count
+          setIsPostLiked(!isPostLiked);
+          setLikesCount((prevLikes: number) => isPostLiked ? prevLikes - 1 : prevLikes + 1);
         }}
       />
     )

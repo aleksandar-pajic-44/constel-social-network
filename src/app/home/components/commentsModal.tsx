@@ -41,8 +41,8 @@ function PostCommentsModal({
 }) {
   const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false); // State to show or hide modal
 
-  const handleCloseModal = () => setShowCommentsModal(false);
-  const handleShowModal = () => setShowCommentsModal(true);
+  const handleCloseModal = (): void => setShowCommentsModal(false);
+  const handleShowModal = (): void => setShowCommentsModal(true);
 
   useEffect(() => {
     if(showCommentsModal) {

@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 });
 
 // Function to set the 'Authorization' header with the token from cookies
-const setAuthHeaderFromCookies = () => {
+const setAuthHeaderFromCookies = (): void => {
   const cookies = new Cookies();
   const token = cookies.get('token');
 

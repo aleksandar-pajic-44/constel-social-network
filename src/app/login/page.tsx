@@ -57,7 +57,7 @@ export default function LoginPage() {
   };
 
 
-  const handleSuccessfulLogin = () => {
+  const handleSuccessfulLogin = (): void => {
     setShowSuccessToast(true);
 
     // Navigate to new page after successful login

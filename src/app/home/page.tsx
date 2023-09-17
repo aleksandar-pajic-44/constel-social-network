@@ -18,7 +18,7 @@ import HomeComponents from './components';
 import PageTitle from '../components/head';
 
 // Services
-import { createPostComment, getCommentsForPost, getFeedPosts, getUserDetails } from './services/user.service';
+import { createPostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
@@ -36,7 +36,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserData = () => {
+    const fetchUserData = (): void => {
       getUserDetails()
         .then((userAccountDetails) => {
           setUserDetails(userAccountDetails);
@@ -50,7 +50,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const fetchFeedPosts = () => {
+    const fetchFeedPosts = (): void => {
       getFeedPosts()
         .then((feedPosts: Post[]) => {
           setFeedPosts(feedPosts);
@@ -74,7 +74,7 @@ export default function Home() {
     setCommentsLoaded(false);
 
     // Call getCommentsForPost and update postComments state
-    getCommentsForPost(postId).then((comments: PostComment[]) => {
+    getCommentsForPost(postId).then((comments: PostComment[]): void => {
       setPostComments(comments);
       // Set loaded state to true once comments are fetched
       setCommentsLoaded(true);
@@ -84,7 +84,15 @@ export default function Home() {
     });
   }
 
-  const handleCreateComment = (postId: string, text: string) => {
+  const handleLikeStatus = (postId: string, isLiked: boolean): void => {
+    const action = isLiked ? 'unlike' : 'like';
+
+    likeOrUnlikePost(postId, isLiked).catch((error: any) => {
+      console.error(`Failed to ${action} the post:`, error);
+    });
+  }
+
+  const handleCreateComment = (postId: string, text: string): void => {
     createPostComment(postId, text).then(() => {
       getCommentsForPost(postId)
         .then((comments: PostComment[]) => {
@@ -99,12 +107,12 @@ export default function Home() {
     });
   };
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (): void => {
     // Add a class to show the scrollbar when the user hovers over the container
     mainContainerRef?.current.classList.add('show-scrollbar');
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     // Remove the class to hide the scrollbar when the user stops hovering
     mainContainerRef?.current.classList.remove('show-scrollbar');
   };
@@ -190,6 +198,9 @@ export default function Home() {
                         postComments={postComments}
                         fetchPostComments={(postId: string) => {
                           handleFetchPostComments(postId);
+                        }}
+                        toggleLikeStatus={(postId: string, isLiked: boolean) => {
+                          handleLikeStatus(postId, isLiked);
                         }}
                         onCreateCommentSubmit={(postId: string, text: string) => {
                           handleCreateComment(postId, text);
