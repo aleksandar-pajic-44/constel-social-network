@@ -7,12 +7,12 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import PostAuthorDetails from './authorDetails';
 import PostTimePosted from './timePosted';
 import PostActionButton from './actionButton';
-
-import { Author } from '../models/post';
 import PostCommentsList from './commentsList';
-import { PostComment } from '../models/post';
 import PostCommentsListLoader from './commentsListLoader';
 import CreateInput from './createInput';
+
+import { PostComment } from '../models/post';
+import { Author } from '../models/post';
 
 function PostCommentsModal({
   author,

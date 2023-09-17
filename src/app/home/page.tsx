@@ -2,6 +2,8 @@
 
 // React Core
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 // Third-party libraries
@@ -13,16 +15,14 @@ import Image from 'next/image';
 
 // Components
 import HomeComponents from './components';
+import PageTitle from '../components/head';
 
 // Services
 import { createPostComment, getCommentsForPost, getFeedPosts, getUserDetails } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
-import { useCookies } from 'react-cookie';
-import { useRouter } from 'next/navigation';
 import { Post, PostComment } from './models/post';
-import PageTitle from '../components/head';
 
 // Fix Next.js issue with rendering this component,
 // this code make sure that component is rendered on client side only
