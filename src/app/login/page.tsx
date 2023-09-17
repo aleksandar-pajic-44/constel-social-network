@@ -24,7 +24,7 @@ import { LOGIN_STATUS, LoginCredentials } from './models/login';
 export default function LoginPage() {
   const [cookies, setCookie] = useCookies<any>(['token']);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [showSuccessToast, setShowSuccessToast] = useState<boolean>(false);
+  const [showLoginSuccessToast, setShowLoginSuccessToast] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -57,8 +57,8 @@ export default function LoginPage() {
   };
 
 
-  const handleSuccessfulLogin = () => {
-    setShowSuccessToast(true);
+  const handleSuccessfulLogin = (): void => {
+    setShowLoginSuccessToast(true);
 
     // Navigate to new page after successful login
     setTimeout(() => {
@@ -96,7 +96,7 @@ export default function LoginPage() {
 
       {/* Toast message */}
       <ToastContainer position={'bottom-center'} className='mb-3'>
-        <Toast bg='success' onClose={() => setShowSuccessToast(false)} show={showSuccessToast} delay={2000} autohide>
+        <Toast bg='success' onClose={() => setShowLoginSuccessToast(false)} show={showLoginSuccessToast} delay={2000} autohide>
           <Toast.Header>
             <strong className="me-auto">Login Successful</strong>
           </Toast.Header>

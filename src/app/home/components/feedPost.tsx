@@ -1,6 +1,6 @@
 import '../home.scss';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -10,10 +10,11 @@ import PostAuthorDetails from './authorDetails';
 import PostTimePosted from './timePosted';
 import PostCommentsModal from './commentsModal';
 
-import { likeOrUnlikePost } from '../services/user.service';
-import { Author } from '../models/post';
+import { Author, PostComment } from '../models/post';
+import { Account } from '@/app/login/models/login';
 
 export default function FeedPost({
+  userDetails,
   author,
   timePosted,
   imageUrl,
@@ -21,8 +22,15 @@ export default function FeedPost({
   likes,
   comments,
   liked,
-  postId
+  postId,
+  postComments,
+  commentsLoaded,
+  fetchPostComments,
+  toggleLikeStatus,
+  onCreateCommentSubmit,
+  onPostDeleteSubmit
 }: {
+  userDetails: Account,
   author: Author,
   timePosted: string,
   imageUrl?: string,
@@ -30,24 +38,42 @@ export default function FeedPost({
   likes: number,
   comments: number,
   liked: boolean,
-  postId: string
+  postId: string,
+  postComments: PostComment[],
+  commentsLoaded: boolean,
+  fetchPostComments: (postId: string) => void,
+  toggleLikeStatus: (postId: string, isLiked: boolean) => void,
+  onCreateCommentSubmit: (postId: string, text: string) => void,
+  onPostDeleteSubmit: (postId: string, commentId: string) => void
 }) {
 
   // State to track liked status
   const [isPostLiked, setIsPostLiked] = useState<boolean>(liked);
   const [likesCount, setLikesCount] = useState<number>(likes);
+  const [commentsCount, setCommentsCount] = useState<number>(comments);
+  const [updatedPostComments, setUpdatedPostComments] = useState<PostComment[]>(postComments);
 
-  const toggleLikeStatus = (liked: boolean) => {
-    const action = liked ? 'unlike' : 'like';
+  // Effect to update the child component when the postComponents prop changes
+  useEffect(() => {
+    setUpdatedPostComments(postComments);
+  }, [postComments]);
 
-    likeOrUnlikePost(postId, liked).then(() => {
-      setIsPostLiked(!liked);
-      setLikesCount((prevLikes: number) => liked ? prevLikes - 1 : prevLikes + 1);
-    })
-    .catch((error: any) => {
-      console.error(`Failed to ${action} the post:`, error);
-    });
-}
+  const likesActionButton = (): React.ReactNode => {
+    return (
+      <PostActionButton
+        count={likesCount}
+        iconType={faHeart}
+        activeStatus={isPostLiked}
+        onButtonClick={() => {
+          toggleLikeStatus(postId, isPostLiked);
+
+          // Update post isLiked state and count
+          setIsPostLiked(!isPostLiked);
+          setLikesCount((prevLikes: number) => isPostLiked ? prevLikes - 1 : prevLikes + 1);
+        }}
+      />
+    )
+  }
 
   return (
     <div className="home__main__feed__post card">
@@ -86,35 +112,35 @@ export default function FeedPost({
         <p className="post__description">{description}</p>
 
         <div className="post__actions">
-          <PostActionButton
-            count={likesCount}
-            iconType={faHeart}
-            activeStatus={isPostLiked}
-            onButtonClick={() => {
-              toggleLikeStatus(isPostLiked);
-            }}
-          />
+          {likesActionButton()}
 
           <PostCommentsModal
             key={postId}
+            userDetails={userDetails}
             author={author}
             timePosted={timePosted}
             imageUrl={imageUrl}
             description={description}
-            comments={comments}
+            comments={commentsCount}
             postId={postId}
+            postComments={updatedPostComments}
+            commentsLoaded={commentsLoaded}
+            onCreateCommentSubmit={(postId: string, text: string) => {
+              onCreateCommentSubmit(postId, text);
+              // Set new comment count
+              setCommentsCount((prevCommentsCount: number) => prevCommentsCount + 1);
+            }}
+            fetchPostComments={(postId: string) => {
+              fetchPostComments(postId);
+            }}
+            onPostDeleteSubmit={(postId: string, commentId: string) => {
+              onPostDeleteSubmit(postId, commentId);
+            }}
           >
-            <PostActionButton
-              count={likesCount}
-              iconType={faHeart}
-              activeStatus={isPostLiked}
-              onButtonClick={() => {
-                toggleLikeStatus(isPostLiked);
-              }}
-            />
+            {likesActionButton()}
 
             <PostActionButton
-              count={comments}
+              count={commentsCount}
               iconType={faComment}
             />
           </PostCommentsModal>

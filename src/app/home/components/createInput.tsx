@@ -10,11 +10,11 @@ export default function CreateInput({ placeholder, onSubmit }: { placeholder?: s
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputText, setInputText] = useState<string>('');
 
-  const handleStatusInputFocus = () => {
+  const handleStatusInputFocus = (): void => {
     setIsFocused(true);
   };
 
-  const handleStatusInputBlur = () => {
+  const handleStatusInputBlur = (): void => {
     setIsFocused(false);
   };
 

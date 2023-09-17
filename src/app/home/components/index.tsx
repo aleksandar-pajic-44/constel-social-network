@@ -21,7 +21,7 @@ const HomeComponents = {
   PostTimePosted,
   PostDeleteButton,
   PostCommentsList,
-  PostCommentsListLoader
+  PostCommentsListLoader,
 };
 
 export default HomeComponents;

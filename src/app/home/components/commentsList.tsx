@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 
 import PostAuthorDetails from './authorDetails';
@@ -7,7 +6,15 @@ import PostDeleteButton from './deletePostButton';
 
 import { PostComment } from '../models/post';
 
-const PostCommentsList = ({ comments, authorUsername }: { comments: PostComment[], authorUsername: string}) => (
+const PostCommentsList = ({
+  comments,
+  userUsername,
+  onPostDeleteSubmit
+}: {
+  comments: PostComment[],
+  userUsername: string
+  onPostDeleteSubmit: (commentId: string) => void
+}) => (
   <>
     <div className='post__comments'>
       {/* Display number of comments */}
@@ -32,8 +39,10 @@ const PostCommentsList = ({ comments, authorUsername }: { comments: PostComment[
                 {/* Delete button & time posted info */}
                 <div className='post__comments__list__comment__header__actions'>
                   <PostTimePosted timePosted={comment?.created_at}/>
-                  { authorUsername === comment?.username && (
-                    <PostDeleteButton />
+                  { userUsername === comment?.username && (
+                    <PostDeleteButton onButtonSubmit={() => {
+                      onPostDeleteSubmit(comment?.comment_id)
+                    }}/>
                   )}
                 </div>
               </div>
@@ -46,9 +55,11 @@ const PostCommentsList = ({ comments, authorUsername }: { comments: PostComment[
               </div>
 
               {/* Comments footer mobile only */}
-              { authorUsername === comment?.username && (
+              { userUsername === comment?.username && (
                 <div className="post__comments__list__comment__footer">
-                    <PostDeleteButton />
+                    <PostDeleteButton onButtonSubmit={() => {
+                      onPostDeleteSubmit(comment?.comment_id)
+                    }}/>
                 </div>
               )}
             </div>

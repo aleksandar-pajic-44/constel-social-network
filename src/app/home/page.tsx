@@ -2,10 +2,11 @@
 
 // React Core
 import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
 
 // Third-party libraries
-import { Nav } from 'react-bootstrap';
+import { Nav, Toast, ToastContainer } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { MutableRefObject, useRef } from 'react';
@@ -13,33 +14,28 @@ import Image from 'next/image';
 
 // Components
 import HomeComponents from './components';
+import PageTitle from '../components/head';
 
 // Services
-import { getFeedPosts, getUserDetails } from './services/user.service';
+import { createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
-import { useCookies } from 'react-cookie';
-import { useRouter } from 'next/navigation';
-import { Post } from './models/post';
-import PageTitle from '../components/head';
-
-// Fix Next.js issue with rendering this component,
-// this code make sure that component is rendered on client side only
-const CommentsModal = dynamic(() => import('./components/commentsModal'), {
-  ssr: false,
-});
+import { Post, PostComment } from './models/post';
 
 export default function Home() {
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
-  const [userDetails, setUserDetails] = useState<Account>();
-  const [feedPosts, setFeedPosts] = useState<Post[]>();
-  const [cookies] = useCookies(['token']);
-
   const router = useRouter();
 
+  const [cookies] = useCookies(['token']);
+  const [userDetails, setUserDetails] = useState<Account>();
+  const [feedPosts, setFeedPosts] = useState<Post[]>();
+  const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
+  const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
+  const [showDeletePostToast, setShowDeletePostToast] = useState<boolean>(false);
+
   useEffect(() => {
-    const fetchUserData = () => {
+    const fetchUserData = (): void => {
       getUserDetails()
         .then((userAccountDetails) => {
           setUserDetails(userAccountDetails);
@@ -53,7 +49,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const fetchFeedPosts = () => {
+    const fetchFeedPosts = (): void => {
       getFeedPosts()
         .then((feedPosts: Post[]) => {
           setFeedPosts(feedPosts);
@@ -73,12 +69,60 @@ export default function Home() {
     }
   });
 
-  const handleMouseEnter = () => {
+  const handleFetchPostComments = (postId: string): void => {
+    setCommentsLoaded(false);
+
+    // Call getCommentsForPost and update postComments state
+    getCommentsForPost(postId).then((comments: PostComment[]): void => {
+      setPostComments(comments);
+      // Set loaded state to true once comments are fetched
+      setCommentsLoaded(true);
+    })
+    .catch((error: any) => {
+      console.error("Error retrieving comments:", error);
+    });
+  }
+
+  const handleLikeStatus = (postId: string, isLiked: boolean): void => {
+    const action = isLiked ? 'unlike' : 'like';
+
+    likeOrUnlikePost(postId, isLiked).catch((error: any) => {
+      console.error(`Failed to ${action} the post:`, error);
+    });
+  }
+
+  const handleCreateComment = (postId: string, text: string): void => {
+    createPostComment(postId, text).then(() => {
+      getCommentsForPost(postId)
+        .then((comments: PostComment[]) => {
+          setPostComments(comments);
+        })
+        .catch((error: any) => {
+          console.error("Error retrieving comments:", error);
+        });
+    })
+    .catch((error: any) => {
+      console.error("Error creating comment:", error);
+    });
+  };
+
+  const handlePostDeleteSubmit = (postId: string, commentId: string): void => {
+    deletePostComment(postId, commentId).then(() => {
+      // Refresh the comments after deletion
+      handleFetchPostComments(postId);
+      setShowDeletePostToast(true);
+    })
+    .catch((error: any) => {
+      console.error("Error deleting comment:", error);
+    });
+  };
+
+  const handleMouseEnter = (): void => {
     // Add a class to show the scrollbar when the user hovers over the container
     mainContainerRef?.current.classList.add('show-scrollbar');
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     // Remove the class to hide the scrollbar when the user stops hovering
     mainContainerRef?.current.classList.remove('show-scrollbar');
   };
@@ -152,6 +196,7 @@ export default function Home() {
                     {feedPosts.map(({ post_id, user, created_at, image, text, likes, comments, liked }: Post) => (
                       <HomeComponents.FeedPost
                         key={post_id}
+                        userDetails={userDetails}
                         author={user}
                         timePosted={created_at}
                         imageUrl={image}
@@ -160,6 +205,20 @@ export default function Home() {
                         comments={comments}
                         liked={liked}
                         postId={post_id}
+                        commentsLoaded={commentsLoaded}
+                        postComments={postComments}
+                        fetchPostComments={(postId: string) => {
+                          handleFetchPostComments(postId);
+                        }}
+                        toggleLikeStatus={(postId: string, isLiked: boolean) => {
+                          handleLikeStatus(postId, isLiked);
+                        }}
+                        onCreateCommentSubmit={(postId: string, text: string) => {
+                          handleCreateComment(postId, text);
+                        }}
+                        onPostDeleteSubmit={(postId: string, commentId: string) => {
+                          handlePostDeleteSubmit(postId, commentId);
+                        }}
                       />
                     ))}
                   </>
@@ -170,6 +229,24 @@ export default function Home() {
           </main>
         </section>
       </article>
+
+      {/* Toast message */}
+      <ToastContainer position={'bottom-end'} className='mb-3'>
+        <Toast
+          bg='success'
+          onClose={() => setShowDeletePostToast(false)}
+          show={showDeletePostToast}
+          delay={2000}
+          autohide
+        >
+          <Toast.Header>
+            <strong className="me-auto">Comment deleted</strong>
+          </Toast.Header>
+          <Toast.Body className='text-light'>
+            You&apos;ve successfully deleted the post comment.
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </>
   )
 }

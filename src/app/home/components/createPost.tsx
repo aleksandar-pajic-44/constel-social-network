@@ -1,13 +1,12 @@
-import '../home.scss';
-
 import Image from 'next/image';
-import { useState } from 'react';
 
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMicrophone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
+
+import CreateInput from './createInput';
+
 import { Account } from '@/app/login/models/login';
-import CreateInput from './createComment';
 
 export default function CreatePost({ userAccount }: { userAccount: Account }) {
   return (

@@ -7,70 +7,57 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import PostAuthorDetails from './authorDetails';
 import PostTimePosted from './timePosted';
 import PostActionButton from './actionButton';
-
-import { Author } from '../models/post';
-import { createPostComment, getCommentsForPost } from '../services/user.service';
 import PostCommentsList from './commentsList';
-import { PostComment } from '../models/post';
 import PostCommentsListLoader from './commentsListLoader';
-import CreateInput from './createComment';
+import CreateInput from './createInput';
+
+import { PostComment } from '../models/post';
+import { Author } from '../models/post';
+import { Account } from '@/app/login/models/login';
 
 function PostCommentsModal({
+  userDetails,
   author,
   timePosted,
   imageUrl,
   description,
   comments,
   postId,
-  children
+  children,
+  postComments,
+  commentsLoaded,
+  fetchPostComments,
+  onCreateCommentSubmit,
+  onPostDeleteSubmit
 }: {
+  userDetails: Account,
   author: Author,
   timePosted: string,
   imageUrl?: string,
   description: string,
   comments: number,
   postId: string,
-  children?: React.ReactNode
+  postComments: PostComment[],
+  commentsLoaded: boolean,
+  children?: React.ReactNode,
+  fetchPostComments: (postId: string) => void,
+  onCreateCommentSubmit: (postId: string, text: string) => void,
+  onPostDeleteSubmit: (postId: string, commentId: string) => void
 }) {
   const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false); // State to show or hide modal
-  const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
-  const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
 
-  const handleCloseModal = () => setShowCommentsModal(false);
-  const handleShowModal = () => setShowCommentsModal(true);
+  const handleCloseModal = (): void => setShowCommentsModal(false);
+  const handleShowModal = (): void => setShowCommentsModal(true);
 
   useEffect(() => {
     if(showCommentsModal) {
-      // Set is loaded state to false
-      setCommentsLoaded(false);
-
-      // Call getCommentsForPost and update postComments state
-      getCommentsForPost(postId)
-      .then((comments: PostComment[]) => {
-        setPostComments(comments);
-        // Set loaded state to true once comments are fetched
-        setCommentsLoaded(true);
-      })
-      .catch((error: any) => {
-        console.error("Error retrieving comments:", error);
-      });
+      fetchPostComments(postId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showCommentsModal, postId]);
 
-  const handleCommentSubmit = (postId: string, text: string) => {
-    createPostComment(postId, text)
-      .then(() => {
-        getCommentsForPost(postId)
-          .then((comments: PostComment[]) => {
-            setPostComments(comments);
-          })
-          .catch((error: any) => {
-            console.error("Error retrieving comments:", error);
-          });
-      })
-      .catch((error: any) => {
-        console.error("Error creating comment:", error);
-      });
+  const handleCommentSubmit = (postId: string, text: string): void => {
+    onCreateCommentSubmit(postId, text);
   };
 
   return (
@@ -130,10 +117,15 @@ function PostCommentsModal({
 
           {commentsLoaded ? (
             postComments?.length > 0 && (
-              <PostCommentsList authorUsername={author?.username} comments={postComments} />
+              <PostCommentsList
+                userUsername={userDetails?.username}
+                comments={postComments}
+                onPostDeleteSubmit={(commentId: string) => {
+                  onPostDeleteSubmit(postId, commentId);
+                }}/>
             )
           ) : (
-            <PostCommentsListLoader count={2} />
+            <PostCommentsListLoader count={3} />
           )}
         </Modal.Body>
       </Modal>
