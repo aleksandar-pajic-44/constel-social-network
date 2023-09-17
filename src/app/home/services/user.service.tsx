@@ -98,7 +98,7 @@ export const createPostComment = async (postId: string, text: string): Promise<v
  * @param {string} commentId - ID of the comment to delete.
  * @returns {Promise<void>} A promise indicating success or failure.
 **/
-export const deleteComment = async (postId: string, commentId: string): Promise<void> => {
+export const deletePostComment = async (postId: string, commentId: string): Promise<void> => {
   const endpoint = `/post/${postId}/comments/${commentId}`;
 
   try {

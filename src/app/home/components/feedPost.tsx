@@ -11,8 +11,10 @@ import PostTimePosted from './timePosted';
 import PostCommentsModal from './commentsModal';
 
 import { Author, PostComment } from '../models/post';
+import { Account } from '@/app/login/models/login';
 
 export default function FeedPost({
+  userDetails,
   author,
   timePosted,
   imageUrl,
@@ -25,8 +27,10 @@ export default function FeedPost({
   commentsLoaded,
   fetchPostComments,
   toggleLikeStatus,
-  onCreateCommentSubmit
+  onCreateCommentSubmit,
+  onPostDeleteSubmit
 }: {
+  userDetails: Account,
   author: Author,
   timePosted: string,
   imageUrl?: string,
@@ -39,7 +43,8 @@ export default function FeedPost({
   commentsLoaded: boolean,
   fetchPostComments: (postId: string) => void,
   toggleLikeStatus: (postId: string, isLiked: boolean) => void,
-  onCreateCommentSubmit: (postId: string, text: string) => void
+  onCreateCommentSubmit: (postId: string, text: string) => void,
+  onPostDeleteSubmit: (postId: string, commentId: string) => void
 }) {
 
   // State to track liked status
@@ -111,6 +116,7 @@ export default function FeedPost({
 
           <PostCommentsModal
             key={postId}
+            userDetails={userDetails}
             author={author}
             timePosted={timePosted}
             imageUrl={imageUrl}
@@ -126,6 +132,9 @@ export default function FeedPost({
             }}
             fetchPostComments={(postId: string) => {
               fetchPostComments(postId);
+            }}
+            onPostDeleteSubmit={(postId: string, commentId: string) => {
+              onPostDeleteSubmit(postId, commentId);
             }}
           >
             {likesActionButton()}

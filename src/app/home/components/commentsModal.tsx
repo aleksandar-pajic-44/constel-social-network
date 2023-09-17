@@ -13,8 +13,10 @@ import CreateInput from './createInput';
 
 import { PostComment } from '../models/post';
 import { Author } from '../models/post';
+import { Account } from '@/app/login/models/login';
 
 function PostCommentsModal({
+  userDetails,
   author,
   timePosted,
   imageUrl,
@@ -25,8 +27,10 @@ function PostCommentsModal({
   postComments,
   commentsLoaded,
   fetchPostComments,
-  onCreateCommentSubmit
+  onCreateCommentSubmit,
+  onPostDeleteSubmit
 }: {
+  userDetails: Account,
   author: Author,
   timePosted: string,
   imageUrl?: string,
@@ -37,7 +41,8 @@ function PostCommentsModal({
   commentsLoaded: boolean,
   children?: React.ReactNode,
   fetchPostComments: (postId: string) => void,
-  onCreateCommentSubmit: (postId: string, text: string) => void
+  onCreateCommentSubmit: (postId: string, text: string) => void,
+  onPostDeleteSubmit: (postId: string, commentId: string) => void
 }) {
   const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false); // State to show or hide modal
 
@@ -112,7 +117,12 @@ function PostCommentsModal({
 
           {commentsLoaded ? (
             postComments?.length > 0 && (
-              <PostCommentsList authorUsername={author?.username} comments={postComments} />
+              <PostCommentsList
+                userUsername={userDetails?.username}
+                comments={postComments}
+                onPostDeleteSubmit={(commentId: string) => {
+                  onPostDeleteSubmit(postId, commentId);
+                }}/>
             )
           ) : (
             <PostCommentsListLoader count={3} />

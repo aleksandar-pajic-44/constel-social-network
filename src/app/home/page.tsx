@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
 
 // Third-party libraries
-import { Nav } from 'react-bootstrap';
+import { Nav, Toast, ToastContainer } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { MutableRefObject, useRef } from 'react';
@@ -17,7 +17,7 @@ import HomeComponents from './components';
 import PageTitle from '../components/head';
 
 // Services
-import { createPostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
+import { createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
@@ -25,14 +25,14 @@ import { Post, PostComment } from './models/post';
 
 export default function Home() {
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const router = useRouter();
+
+  const [cookies] = useCookies(['token']);
   const [userDetails, setUserDetails] = useState<Account>();
   const [feedPosts, setFeedPosts] = useState<Post[]>();
-  const [cookies] = useCookies(['token']);
-
   const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
   const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
-
-  const router = useRouter();
+  const [showDeletePostToast, setShowDeletePostToast] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserData = (): void => {
@@ -103,6 +103,17 @@ export default function Home() {
     })
     .catch((error: any) => {
       console.error("Error creating comment:", error);
+    });
+  };
+
+  const handlePostDeleteSubmit = (postId: string, commentId: string): void => {
+    deletePostComment(postId, commentId).then(() => {
+      // Refresh the comments after deletion
+      handleFetchPostComments(postId);
+      setShowDeletePostToast(true);
+    })
+    .catch((error: any) => {
+      console.error("Error deleting comment:", error);
     });
   };
 
@@ -185,6 +196,7 @@ export default function Home() {
                     {feedPosts.map(({ post_id, user, created_at, image, text, likes, comments, liked }: Post) => (
                       <HomeComponents.FeedPost
                         key={post_id}
+                        userDetails={userDetails}
                         author={user}
                         timePosted={created_at}
                         imageUrl={image}
@@ -204,6 +216,9 @@ export default function Home() {
                         onCreateCommentSubmit={(postId: string, text: string) => {
                           handleCreateComment(postId, text);
                         }}
+                        onPostDeleteSubmit={(postId: string, commentId: string) => {
+                          handlePostDeleteSubmit(postId, commentId);
+                        }}
                       />
                     ))}
                   </>
@@ -214,6 +229,24 @@ export default function Home() {
           </main>
         </section>
       </article>
+
+      {/* Toast message */}
+      <ToastContainer position={'bottom-end'} className='mb-3'>
+        <Toast
+          bg='success'
+          onClose={() => setShowDeletePostToast(false)}
+          show={showDeletePostToast}
+          delay={2000}
+          autohide
+        >
+          <Toast.Header>
+            <strong className="me-auto">Comment deleted</strong>
+          </Toast.Header>
+          <Toast.Body className='text-light'>
+            You&apos;ve successfully deleted the post comment.
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </>
   )
 }
