@@ -7,20 +7,9 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { Account } from '@/app/login/models/login';
+import CreateInput from './createComment';
 
 export default function CreatePost({ userAccount }: { userAccount: Account }) {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleStatusInputFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleStatusInputBlur = () => {
-    setIsFocused(false);
-  };
-
-  const inputClass = `profile__input ${isFocused ? 'profile__input--focused' : ''}`;
-
   return (
     <div className="home__main__feed__post card">
       <div className="card-body">
@@ -38,18 +27,9 @@ export default function CreatePost({ userAccount }: { userAccount: Account }) {
           />
 
           {/* Input field */}
-          <InputGroup className={inputClass}>
-            <Form.Control
-              placeholder="What's happening"
-              aria-label="What's happening"
-              aria-labelledby='whatsHappening1'
-              onFocus={handleStatusInputFocus}
-              onBlur={handleStatusInputBlur}
-            />
-            <Button variant="light">
-              <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
-            </Button>
-          </InputGroup>
+          <CreateInput placeholder="What's happening" onSubmit={(text: string) => {
+            console.log(text);
+          }}/>
         </div>
 
         {/* Record action section */}

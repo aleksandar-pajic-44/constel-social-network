@@ -16,3 +16,12 @@ export interface Post {
   user: Author;
   liked: boolean;
 }
+
+export interface PostComment {
+  comment_id: string;
+  text: string;
+  created_at: string;
+  username: string;
+  full_name: string;
+  picture: string;
+}

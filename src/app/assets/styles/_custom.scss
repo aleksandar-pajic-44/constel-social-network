@@ -1,7 +1,9 @@
+@import './breakpoints';
+
 input.form-control {
   border: 1px solid $gray-3;
-  padding: 0.875rem 1.25rem;
-  border-radius: 0.625rem;
+  padding: .875rem 1.25rem;
+  border-radius: .625rem;
 
   &::placeholder {
     color: $gray-3;
@@ -12,11 +14,11 @@ input.form-control {
   &:focus {
     border-color: $primary;
     outline: 0;
-    box-shadow: 0 0 0 0.04rem $primary;
+    box-shadow: 0 0 0 .04rem $primary;
   }
 
   &.is-invalid:focus {
-    box-shadow: 0 0 0 0.05rem $danger;
+    box-shadow: 0 0 0 .05rem $danger;
   }
 }
 
@@ -49,18 +51,18 @@ input.form-control {
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #{$gray-3};
   --bs-btn-hover-border-color: #{$gray-3};
-  --bs-btn-focus-shadow-rgb: 66, 70, 73;
+  --bs-btn-focus-shadow-rgb: 166, 166, 166;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #{$gray-3};
   --bs-btn-active-border-color: #{$gray-3};
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
   --bs-btn-disabled-color: #{$gray-1};
   --bs-btn-disabled-bg: #{$gray-2};
   --bs-btn-disabled-border-color: #{$gray-2};
 }
 
 .btn {
-  --bs-btn-border-radius: 0.625rem;
+  --bs-btn-border-radius: .625rem;
 }
 
 
@@ -69,7 +71,7 @@ input.form-control {
   --bs-nav-link-hover-color: #{$primary};
 
   .nav-item {
-    border-radius: 0.625rem;
+    border-radius: .625rem;
   }
 }
 
@@ -93,4 +95,10 @@ input.form-control {
   background-color: $gray-2;
   border-radius: 10px;
   border: 3px solid $white;
+}
+
+.modal-dialog {
+  @media (max-width: 991px) {
+    max-width: 97vw;
+  }
 }

@@ -68,27 +68,48 @@
     }
 
     &__headingTitle {
-      border-bottom: 1px solid $gray-2;
+      @include dynamic-flex(center, center);
+
       padding: 1rem 2rem;
       background: $white;
       position: sticky;
       z-index: 1;
       top: 0;
 
+      @media #{$mobile-l} {
+        text-align: start;
+        display: block;
+        border-bottom: 1px solid $gray-2;
+      }
+
       h1 {
         font-size: 1.1875rem;
         margin: 0;
+        display: none;
+
+        @media #{$mobile-l} {
+          display: block;
+        }
+      }
+
+      &__branding {
+        display: block;
+
+        @media #{$mobile-l} {
+          display: none;
+        }
       }
     }
 
     &__feed {
       @include dynamic-flex(center, center, column, 1.5rem);
-      padding: 2rem;
+      padding: 1rem;
 
       &__post {
         width: 100%;
         background-color: $gray-1;
         border: none;
+        border-radius: .625rem;
 
         .card-body {
           padding: 2rem;
@@ -96,57 +117,6 @@
 
         &__status {
           @include dynamic-flex(center, center, row, 1.25rem);
-
-          .profile {
-            &__image {
-              object-fit: cover
-            }
-
-            &__input {
-              border-bottom: 1px solid $gray-2;
-
-              &--focused {
-                border-bottom: 1px solid $primary;
-
-                button.btn {
-                  svg {
-                    color: $primary;
-                  }
-                }
-              }
-
-              button, input {
-                border-radius: 0;
-              }
-
-              input {
-                padding: 0.875rem 0;
-                border: none;
-                background-color: $gray-1;
-              }
-
-              .form-control:focus {
-                box-shadow: 0px 1px 0px 0px $primary;
-              }
-
-              .btn {
-                background-color: transparent;
-
-                &:hover {
-                  border-color: $gray-1;
-
-                  svg {
-                    color: $primary;
-                  }
-                }
-
-                svg {
-                  color: $gray-3;
-                  font-size: 1.1875rem
-                }
-              }
-            }
-          }
         }
 
         &__record {
@@ -157,12 +127,13 @@
             &__button {
               padding: 1rem 3.625rem;
               font-weight: bold;
-              font-size: 0.9375rem;
+              font-size: .9375rem;
             }
 
             &__icon {
               color: $primary;
               font-size: 1.5rem;
+              margin-right: 0;
             }
           }
 
@@ -173,74 +144,24 @@
 
         &__header {
           @include dynamic-flex(center, space-between, row);
-          padding: 2rem 2rem 0 2rem;
+          padding: 1rem 1rem 0 1rem;
 
-          .user-informations-wrapper {
-            @include dynamic-flex(center, flex-start, row, .75rem);
-
-            img {
-              object-fit: cover;
-            }
-
-            .user-details {
-              display: flex;
-              flex-direction: column;
-
-              &__username {
-                font-size: 0.875rem;
-                color: $gray-3;
-              }
-
-              &__fullName {
-                font-size: 0.9375rem;
-                font-weight: 700;
-              }
-            }
-          }
-
-          .post-informations {
-            &__timePosted {
-              font-size: 0.875rem;
-              color: $gray-3;
-
-              svg {
-                margin-right: 0.3125rem;
-              }
-            }
+          @media #{$mobile-l} {
+            padding: 2rem 2rem 0 2rem;
           }
         }
 
         &__body {
-          padding: 0.8125rem 2rem 2rem 2rem;
+          padding: 1rem;
 
-          .post-image {
-            max-width: 100%;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 0.625rem;
-            margin-bottom: 0.75rem;
-          }
-
-          .post-description {
-            font-size: 0.9375rem;
-            margin: 0
-          }
-
-          .post-actions {
-            @include dynamic-flex(center, flex-start, row, 1rem);
-
-            margin-top: .75rem;
-
-            button.btn {
-              @include dynamic-flex(center, center, row);
-
-              svg {
-                margin-right: .75rem;
-                font-size: 1.1875rem;
-              }
-            }
+          @media #{$mobile-l} {
+            padding: .8125rem 2rem 2rem 2rem;
           }
         }
+      }
+
+      @media #{$mobile-l} {
+        padding: 2rem;
       }
     }
 
@@ -264,6 +185,227 @@
       }
       to {
         overflow-y: hidden;
+      }
+    }
+  }
+}
+
+.user-informations-wrapper {
+  @include dynamic-flex(center, flex-start, row, .75rem);
+
+  img {
+    object-fit: cover;
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+
+    &__username {
+      font-size: .875rem;
+      color: $gray-3;
+    }
+
+    &__fullName {
+      font-size: .9375rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.post {
+  &__informations {
+    &__timePosted {
+      font-size: .875rem;
+      color: $gray-3;
+
+      svg {
+        margin-right: .3125rem;
+      }
+    }
+  }
+
+  &__image {
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: .625rem;
+    margin-bottom: .75rem;
+  }
+
+  &__description {
+    font-size: .9375rem;
+    margin: 0;
+
+    &--modal {
+      margin-top: .5rem;
+    }
+  }
+
+  &__actions {
+    @include dynamic-flex(center, flex-start, row, 1rem);
+    margin-top: .75rem;
+
+    &--comment {
+      margin-top: 1rem;
+    }
+
+    button.btn {
+      @include dynamic-flex(center, center, row);
+
+      svg {
+        margin-right: .75rem;
+        font-size: 1.1875rem;
+      }
+    }
+  }
+
+  &__comments {
+    margin-top: 1.5rem;
+    width: 100%;
+
+    &__title {
+      font-size: 1.1875rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      &__comment {
+        &__header {
+          @include dynamic-flex(center, space-between, row);
+
+          &__actions {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+          }
+        }
+
+        &__footer {
+          @include dynamic-flex(center, center);
+
+          padding-top: 0.75rem;
+          margin-top: 0.75rem;
+          border-top: 1px solid $gray-2;
+
+          .post__deleteBtn {
+            display: block;
+            width: 100%;
+
+            @media #{$mobile-l} {
+              display: none;
+            }
+          }
+
+          @media #{$mobile-l} {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  &__deleteBtn {
+    color: $danger;
+    text-decoration: none;
+    font-size: 0.875rem;
+    display: none;
+
+    &.btn-link svg {
+      margin-right: 0.3125rem;
+    }
+
+    &:hover {
+      color: darken($danger, 20);
+      background-color: rgba($danger, .15);
+    }
+
+    @media #{$mobile-l} {
+      display: block;
+    }
+  }
+}
+
+.commentsModal {
+  .modal-content {
+    border-radius: .625rem;
+  }
+
+  &__body {
+    padding: 1rem 2rem 2rem 2rem;
+    @include dynamic-flex(flex-start, center, column);
+
+    .post__image {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__header {
+    padding: 2rem 2rem 0 2rem;
+    border-bottom: none;
+  }
+}
+
+button.btn {
+  svg {
+    margin-right: .75rem;
+  }
+}
+
+
+.profile {
+  &__image {
+    object-fit: cover
+  }
+
+  &__input {
+    border-bottom: 1px solid $gray-2;
+
+    &--focused {
+      border-bottom: 1px solid $primary;
+
+      button.btn {
+        svg {
+          color: $primary;
+        }
+      }
+    }
+
+    button, input {
+      border-radius: 0;
+    }
+
+    input {
+      padding: .875rem 0;
+      border: none;
+      background-color: transparent;
+    }
+
+    .form-control:focus {
+      box-shadow: 0px 1px 0px 0px $primary;
+      background: transparent;
+    }
+
+    .btn {
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        border-color: $gray-1;
+
+        svg {
+          color: $primary;
+        }
+      }
+
+      svg {
+        color: $gray-3;
+        font-size: 1.1875rem
       }
     }
   }

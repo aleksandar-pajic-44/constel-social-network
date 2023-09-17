@@ -2,6 +2,7 @@
 
 // React Core
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 // Third-party libraries
 import { Nav } from 'react-bootstrap';
@@ -22,6 +23,12 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
 import { Post } from './models/post';
 import PageTitle from '../components/head';
+
+// Fix Next.js issue with rendering this component,
+// this code make sure that component is rendered on client side only
+const CommentsModal = dynamic(() => import('./components/commentsModal'), {
+  ssr: false,
+});
 
 export default function Home() {
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -117,6 +124,17 @@ export default function Home() {
           >
             <div className='home__main__headingTitle'>
               <h1>Home</h1>
+
+              <Image
+                id='constellation-logo'
+                src="images/constel-logo.svg"
+                width={32}
+                height={32}
+                aria-label='Constellation logo'
+                aria-labelledby='constellationLogo1'
+                className='home__main__headingTitle__branding'
+                alt='Constellation logo'
+              />
             </div>
 
             {/* Main feed section */}
