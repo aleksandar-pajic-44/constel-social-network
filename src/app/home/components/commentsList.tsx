@@ -12,7 +12,7 @@ const PostCommentsList = ({
   onPostDeleteSubmit
 }: {
   comments: PostComment[],
-  userUsername: string
+  userUsername: string | undefined,
   onPostDeleteSubmit: (commentId: string) => void
 }) => (
   <>

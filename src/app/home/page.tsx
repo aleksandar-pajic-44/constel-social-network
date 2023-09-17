@@ -196,7 +196,7 @@ export default function Home() {
                     {feedPosts.map(({ post_id, user, created_at, image, text, likes, comments, liked }: Post) => (
                       <HomeComponents.FeedPost
                         key={post_id}
-                        userDetails={userDetails}
+                        userDetails={userDetails || undefined}
                         author={user}
                         timePosted={created_at}
                         imageUrl={image}
