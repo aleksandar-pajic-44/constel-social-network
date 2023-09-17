@@ -34,8 +34,8 @@ export default function FeedPost({
 }) {
 
   // State to track liked status
-  const [isPostLiked, setIsPostLiked] = useState(liked);
-  const [likesCount, setLikesCount] = useState(likes);
+  const [isPostLiked, setIsPostLiked] = useState<boolean>(liked);
+  const [likesCount, setLikesCount] = useState<number>(likes);
 
   const toggleLikeStatus = (liked: boolean) => {
     const action = liked ? 'unlike' : 'like';

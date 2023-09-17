@@ -22,9 +22,9 @@ import { loginUser } from './services/login.service';
 import { LOGIN_STATUS, LoginCredentials } from './models/login';
 
 export default function LoginPage() {
-  const [cookies, setCookie] = useCookies(['token']);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [cookies, setCookie] = useCookies<any>(['token']);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [showSuccessToast, setShowSuccessToast] = useState<boolean>(false);
 
   const router = useRouter();
 

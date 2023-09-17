@@ -49,3 +49,23 @@ export const getCommentsForPost = async (postId: string): Promise<PostComment[]>
     throw error;
   }
 };
+
+// Create a new comment on a post
+export const createPostComment = async (postId: string, text: string): Promise<void> => {
+  const endpoint = `/posts/${postId}/comments`;
+
+  try {
+    const response = await axiosInstance.post(endpoint, {
+      text: text,
+    });
+
+    if (response.status === 200 && response.data.status === 'ok') {
+      // Comment creation was successful
+      return;
+    } else {
+      throw new Error("Failed to create a new comment for the post");
+    }
+  } catch (error: any) {
+    throw error;
+  }
+};

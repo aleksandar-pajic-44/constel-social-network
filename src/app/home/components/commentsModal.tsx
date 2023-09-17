@@ -9,10 +9,11 @@ import PostTimePosted from './timePosted';
 import PostActionButton from './actionButton';
 
 import { Author } from '../models/post';
-import { getCommentsForPost } from '../services/user.service';
+import { createPostComment, getCommentsForPost } from '../services/user.service';
 import PostCommentsList from './commentsList';
 import { PostComment } from '../models/post';
 import PostCommentsListLoader from './commentsListLoader';
+import CreateInput from './createComment';
 
 function PostCommentsModal({
   author,
@@ -31,7 +32,7 @@ function PostCommentsModal({
   postId: string,
   children?: React.ReactNode
 }) {
-  const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false);
+  const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false); // State to show or hide modal
   const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
   const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
 
@@ -55,6 +56,22 @@ function PostCommentsModal({
       });
     }
   }, [showCommentsModal, postId]);
+
+  const handleCommentSubmit = (postId: string, text: string) => {
+    createPostComment(postId, text)
+      .then(() => {
+        getCommentsForPost(postId)
+          .then((comments: PostComment[]) => {
+            setPostComments(comments);
+          })
+          .catch((error: any) => {
+            console.error("Error retrieving comments:", error);
+          });
+      })
+      .catch((error: any) => {
+        console.error("Error creating comment:", error);
+      });
+  };
 
   return (
     <>
@@ -91,16 +108,25 @@ function PostCommentsModal({
             />
           )}
 
+          {/* Comment created at time */}
           <PostTimePosted timePosted={timePosted}/>
 
+          {/* Comment text */}
           <p className="post__description post__description--modal">
             {description}
           </p>
 
-          <div className='post__actions'>
-            {children}
+          {/* Input for creating new comment on post */}
+          <div className='mt-1 w-100'>
+            <CreateInput placeholder='Write a comment' onSubmit={(text: string) => {
+              handleCommentSubmit(postId, text);
+            }}/>
           </div>
 
+          {/* Pass like and comment button components */}
+          <div className='post__actions post__actions--comment'>
+            {children}
+          </div>
 
           {commentsLoaded ? (
             postComments?.length > 0 && (
