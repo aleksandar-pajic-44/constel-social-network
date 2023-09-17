@@ -1,5 +1,5 @@
 import axiosInstance from "@/app/utils/axios";
-import { Post } from "../models/post";
+import { Post, PostComment } from "../models/post";
 
 // Get user account details
 export const getUserDetails = async (): Promise<any>  => {
@@ -17,30 +17,33 @@ export const getFeedPosts = async (): Promise<Post[]> => {
   }
 };
 
-// Like a post
-export const likePost = async (postId: string): Promise<void> => {
+// Like or unlike post depending on current isLiked state
+export const likeOrUnlikePost = async (postId: string, isLiked: boolean): Promise<void> => {
+  const endpoint = `/posts/${postId}/like`;
+
   try {
-    const response = await axiosInstance.post(`/posts/${postId}/like`);
-    if (response.status === 200 && response.data.status === "ok") {
-      // Like was successful
+    const response = await axiosInstance[isLiked ? 'delete' : 'post'](endpoint);
+
+    if (response.status === 200 && response.data.status === 'ok') {
+      // Action (like or unlike) was successful
       return;
     } else {
-      throw new Error("Failed to like the post");
+      throw new Error(`Failed to ${isLiked ? 'unlike' : 'like'} the post`);
     }
   } catch (error: any) {
     throw error;
   }
 };
 
-// Unlike a post
-export const unlikePost = async (postId: string): Promise<void> => {
+// Get comments for a specific post
+export const getCommentsForPost = async (postId: string): Promise<PostComment[]> => {
   try {
-    const response = await axiosInstance.delete(`/posts/${postId}/like`);
+    const response = await axiosInstance.get(`/posts/${postId}/comments`);
+
     if (response.status === 200 && response.data.status === "ok") {
-      // Unlike was successful
-      return;
+      return response.data.comments;
     } else {
-      throw new Error("Failed to unlike the post");
+      throw new Error("Failed to retrieve comments for the post");
     }
   } catch (error: any) {
     throw error;

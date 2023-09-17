@@ -9,7 +9,7 @@ const PostTimePosted = ({ timePosted }: { timePosted: string }) => {
   const timePostedDate = parseISO(timePosted);
 
   // Format the timePostedDate in "DD.MM.YYYY" format
-  const formattedTimePosted = format(timePostedDate, 'dd.MM.yyyy');
+  const formattedTimePosted = format(timePostedDate, 'dd.MM.yyyy.');
 
   return (
     <div className="post__informations">

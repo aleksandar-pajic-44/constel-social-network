@@ -10,8 +10,7 @@ import PostAuthorDetails from './authorDetails';
 import PostTimePosted from './timePosted';
 import PostCommentsModal from './commentsModal';
 
-import { likePost, unlikePost } from '../services/user.service';
-
+import { likeOrUnlikePost } from '../services/user.service';
 import { Author } from '../models/post';
 
 export default function FeedPost({
@@ -39,30 +38,16 @@ export default function FeedPost({
   const [likesCount, setLikesCount] = useState(likes);
 
   const toggleLikeStatus = (liked: boolean) => {
-    if (liked) {
-      // If the post is already liked, unlike it
-      unlikePost(postId).then(() => {
-        setIsPostLiked(false);
+    const action = liked ? 'unlike' : 'like';
 
-        // Decrease likes count
-        setLikesCount((prevLikes: number) => prevLikes - 1)
-      })
-      .catch((error: any) => {
-        console.error("Failed to unlike the post:", error);
-      });
-    } else {
-      // If the post is not liked, like it
-      likePost(postId).then(() => {
-        setIsPostLiked(true);
-
-        // Increase likes count
-        setLikesCount((prevLikes: number) => prevLikes + 1)
-      })
-      .catch((error: any) => {
-        console.error("Failed to like the post:", error);
-      });
-    }
-  }
+    likeOrUnlikePost(postId, liked).then(() => {
+      setIsPostLiked(!liked);
+      setLikesCount((prevLikes: number) => liked ? prevLikes - 1 : prevLikes + 1);
+    })
+    .catch((error: any) => {
+      console.error(`Failed to ${action} the post:`, error);
+    });
+}
 
   return (
     <div className="home__main__feed__post card">
@@ -116,9 +101,7 @@ export default function FeedPost({
             timePosted={timePosted}
             imageUrl={imageUrl}
             description={description}
-            likes={likes}
             comments={comments}
-            liked={liked}
             postId={postId}
           >
             <PostActionButton

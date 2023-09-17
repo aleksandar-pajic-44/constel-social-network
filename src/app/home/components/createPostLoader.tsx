@@ -8,6 +8,8 @@ const CreatePostLoader = ({ count = 1 }: { count?: number }) => (
         key={index}
         uniqueKey='createPosts'
         viewBox="0 0 320 70"
+        backgroundColor="#f0f0f0"
+        foregroundColor="#dedede"
       >
         <circle cx="20" cy="19" r="15" />
         <rect x="50" y="10" rx="3" ry="3" width="240" height="20" />
