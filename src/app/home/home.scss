@@ -120,7 +120,7 @@
               }
 
               input {
-                padding: 0.875rem 0;
+                padding: .875rem 0;
                 border: none;
                 background-color: $gray-1;
               }
@@ -157,7 +157,7 @@
             &__button {
               padding: 1rem 3.625rem;
               font-weight: bold;
-              font-size: 0.9375rem;
+              font-size: .9375rem;
             }
 
             &__icon {
@@ -174,72 +174,10 @@
         &__header {
           @include dynamic-flex(center, space-between, row);
           padding: 2rem 2rem 0 2rem;
-
-          .user-informations-wrapper {
-            @include dynamic-flex(center, flex-start, row, .75rem);
-
-            img {
-              object-fit: cover;
-            }
-
-            .user-details {
-              display: flex;
-              flex-direction: column;
-
-              &__username {
-                font-size: 0.875rem;
-                color: $gray-3;
-              }
-
-              &__fullName {
-                font-size: 0.9375rem;
-                font-weight: 700;
-              }
-            }
-          }
-
-          .post-informations {
-            &__timePosted {
-              font-size: 0.875rem;
-              color: $gray-3;
-
-              svg {
-                margin-right: 0.3125rem;
-              }
-            }
-          }
         }
 
         &__body {
-          padding: 0.8125rem 2rem 2rem 2rem;
-
-          .post-image {
-            max-width: 100%;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 0.625rem;
-            margin-bottom: 0.75rem;
-          }
-
-          .post-description {
-            font-size: 0.9375rem;
-            margin: 0
-          }
-
-          .post-actions {
-            @include dynamic-flex(center, flex-start, row, 1rem);
-
-            margin-top: .75rem;
-
-            button.btn {
-              @include dynamic-flex(center, center, row);
-
-              svg {
-                margin-right: .75rem;
-                font-size: 1.1875rem;
-              }
-            }
-          }
+          padding: .8125rem 2rem 2rem 2rem;
         }
       }
     }
@@ -266,5 +204,94 @@
         overflow-y: hidden;
       }
     }
+  }
+}
+
+.user-informations-wrapper {
+  @include dynamic-flex(center, flex-start, row, .75rem);
+
+  img {
+    object-fit: cover;
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+
+    &__username {
+      font-size: .875rem;
+      color: $gray-3;
+    }
+
+    &__fullName {
+      font-size: .9375rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.post-informations {
+  &__timePosted {
+    font-size: .875rem;
+    color: $gray-3;
+
+    svg {
+      margin-right: .3125rem;
+    }
+  }
+}
+
+.post-image {
+  max-width: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: .625rem;
+  margin-bottom: .75rem;
+}
+
+.post-description {
+  font-size: .9375rem;
+  margin: 0;
+
+  &--modal {
+    margin-top: .5rem;
+  }
+}
+
+.post-actions {
+  @include dynamic-flex(center, flex-start, row, 1rem);
+
+  margin-top: .75rem;
+
+  button.btn {
+    @include dynamic-flex(center, center, row);
+
+    svg {
+      margin-right: .75rem;
+      font-size: 1.1875rem;
+    }
+  }
+}
+
+.commentsModal {
+  .modal-content {
+    border-radius: .625rem;
+  }
+
+  &__body {
+    padding: 1rem 2rem 2rem 2rem;
+    @include dynamic-flex(flex-start, center, column);
+
+    .post-image {
+      width: 100%;
+      object-fit: cover;
+      border-radius: .625rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__header {
+    padding: 2rem 2rem 0 2rem;
+    border-bottom: none;
   }
 }

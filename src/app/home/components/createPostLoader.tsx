@@ -12,7 +12,7 @@ const CreatePostLoader = ({ count = 1 }: { count?: number }) => (
         <circle cx="20" cy="19" r="15" />
         <rect x="50" y="10" rx="3" ry="3" width="240" height="20" />
         <rect x="295" y="10" rx="3" ry="3" width="20" height="20" />
-        <rect x="5" y="40" rx="3" ry="3" width="310" height="0.5" />
+        <rect x="5" y="40" rx="3" ry="3" width="310" height=".5" />
         <rect x="245" y="46" rx="3" ry="3" width="70" height="20" />
         <circle cx="60" cy="57" r="10" />
       </ContentLoader>

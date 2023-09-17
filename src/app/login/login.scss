@@ -27,7 +27,7 @@
   &__submitButton {
     padding: 1rem 3.9375rem;
     font-weight: bold;
-    font-size: 0.93rem;
+    font-size: .93rem;
 
     &__wrapper {
       @include dynamic-flex(center, center);
@@ -36,13 +36,13 @@
 
   &__errorMessage {
     color: $gray-1;
-    padding: 0.3125rem;
+    padding: .3125rem;
     margin: 0;
-    font-size: 0.9375rem;
+    font-size: .9375rem;
     text-align: center;
     background-color: $danger;
     border: 1px solid $danger;
-    border-radius: 0.625rem;
+    border-radius: .625rem;
     width: 100%;
   }
 }
