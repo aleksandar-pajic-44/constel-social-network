@@ -15,13 +15,13 @@ import Image from 'next/image';
 import HomeComponents from './components';
 
 // Services
-import { getFeedPosts, getUserDetails } from './services/user.service';
+import { createPostComment, getCommentsForPost, getFeedPosts, getUserDetails } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
-import { Post } from './models/post';
+import { Post, PostComment } from './models/post';
 import PageTitle from '../components/head';
 
 // Fix Next.js issue with rendering this component,
@@ -35,6 +35,9 @@ export default function Home() {
   const [userDetails, setUserDetails] = useState<Account>();
   const [feedPosts, setFeedPosts] = useState<Post[]>();
   const [cookies] = useCookies(['token']);
+
+  const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
+  const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
 
   const router = useRouter();
 
@@ -72,6 +75,35 @@ export default function Home() {
       router.push('/login');
     }
   });
+
+  const handleFetchPostComments = (postId: string): void => {
+    setCommentsLoaded(false);
+
+    // Call getCommentsForPost and update postComments state
+    getCommentsForPost(postId).then((comments: PostComment[]) => {
+      setPostComments(comments);
+      // Set loaded state to true once comments are fetched
+      setCommentsLoaded(true);
+    })
+    .catch((error: any) => {
+      console.error("Error retrieving comments:", error);
+    });
+  }
+
+  const handleCreateComment = (postId: string, text: string) => {
+    createPostComment(postId, text).then(() => {
+      getCommentsForPost(postId)
+        .then((comments: PostComment[]) => {
+          setPostComments(comments);
+        })
+        .catch((error: any) => {
+          console.error("Error retrieving comments:", error);
+        });
+    })
+    .catch((error: any) => {
+      console.error("Error creating comment:", error);
+    });
+  };
 
   const handleMouseEnter = () => {
     // Add a class to show the scrollbar when the user hovers over the container
@@ -160,6 +192,14 @@ export default function Home() {
                         comments={comments}
                         liked={liked}
                         postId={post_id}
+                        commentsLoaded={commentsLoaded}
+                        postComments={postComments}
+                        fetchPostComments={(postId: string) => {
+                          handleFetchPostComments(postId);
+                        }}
+                        onCreateCommentSubmit={(postId: string, text: string) => {
+                          handleCreateComment(postId, text);
+                        }}
                       />
                     ))}
                   </>

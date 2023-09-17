@@ -7,7 +7,7 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { Account } from '@/app/login/models/login';
-import CreateInput from './createComment';
+import CreateInput from './createInput';
 
 export default function CreatePost({ userAccount }: { userAccount: Account }) {
   return (
