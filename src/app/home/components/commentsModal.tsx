@@ -30,7 +30,7 @@ function PostCommentsModal({
   onCreateCommentSubmit,
   onPostDeleteSubmit
 }: {
-  userDetails: Account,
+  userDetails: Account | undefined,
   author: Author,
   timePosted: string,
   imageUrl?: string,
