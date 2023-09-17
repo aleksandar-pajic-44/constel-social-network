@@ -68,22 +68,42 @@
     }
 
     &__headingTitle {
-      border-bottom: 1px solid $gray-2;
+      @include dynamic-flex(center, center);
+
       padding: 1rem 2rem;
       background: $white;
       position: sticky;
       z-index: 1;
       top: 0;
 
+      @media #{$mobile-l} {
+        text-align: start;
+        display: block;
+        border-bottom: 1px solid $gray-2;
+      }
+
       h1 {
         font-size: 1.1875rem;
         margin: 0;
+        display: none;
+
+        @media #{$mobile-l} {
+          display: block;
+        }
+      }
+
+      &__branding {
+        display: block;
+
+        @media #{$mobile-l} {
+          display: none;
+        }
       }
     }
 
     &__feed {
       @include dynamic-flex(center, center, column, 1.5rem);
-      padding: 2rem;
+      padding: 1rem;
 
       &__post {
         width: 100%;
@@ -164,6 +184,7 @@
             &__icon {
               color: $primary;
               font-size: 1.5rem;
+              margin-right: 0;
             }
           }
 
@@ -174,12 +195,24 @@
 
         &__header {
           @include dynamic-flex(center, space-between, row);
-          padding: 2rem 2rem 0 2rem;
+          padding: 1rem 1rem 0 1rem;
+
+          @media #{$mobile-l} {
+            padding: 2rem 2rem 0 2rem;
+          }
         }
 
         &__body {
-          padding: .8125rem 2rem 2rem 2rem;
+          padding: 1rem;
+
+          @media #{$mobile-l} {
+            padding: .8125rem 2rem 2rem 2rem;
+          }
         }
+      }
+
+      @media #{$mobile-l} {
+        padding: 2rem;
       }
     }
 
@@ -300,6 +333,27 @@
             gap: .5rem;
           }
         }
+
+        &__footer {
+          @include dynamic-flex(center, center);
+
+          padding-top: 0.75rem;
+          margin-top: 0.75rem;
+          border-top: 1px solid $gray-2;
+
+          .post__deleteBtn {
+            display: block;
+            width: 100%;
+
+            @media #{$mobile-l} {
+              display: none;
+            }
+          }
+
+          @media #{$mobile-l} {
+            display: none;
+          }
+        }
       }
     }
   }
@@ -308,6 +362,7 @@
     color: $danger;
     text-decoration: none;
     font-size: 0.875rem;
+    display: none;
 
     &.btn-link svg {
       margin-right: 0.3125rem;
@@ -316,6 +371,10 @@
     &:hover {
       color: darken($danger, 20);
       background-color: rgba($danger, .15);
+    }
+
+    @media #{$mobile-l} {
+      display: block;
     }
   }
 }

@@ -124,6 +124,17 @@ export default function Home() {
           >
             <div className='home__main__headingTitle'>
               <h1>Home</h1>
+
+              <Image
+                id='constellation-logo'
+                src="images/constel-logo.svg"
+                width={32}
+                height={32}
+                aria-label='Constellation logo'
+                aria-labelledby='constellationLogo1'
+                className='home__main__headingTitle__branding'
+                alt='Constellation logo'
+              />
             </div>
 
             {/* Main feed section */}

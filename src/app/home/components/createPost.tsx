@@ -47,7 +47,7 @@ export default function CreatePost({ userAccount }: { userAccount: Account }) {
               onBlur={handleStatusInputBlur}
             />
             <Button variant="light">
-              <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faPaperPlane} className='me-0'></FontAwesomeIcon>
             </Button>
           </InputGroup>
         </div>

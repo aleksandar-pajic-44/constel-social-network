@@ -44,6 +44,13 @@ const PostCommentsList = ({ comments, authorUsername }: { comments: PostComment[
                   {comment?.text}
                 </p>
               </div>
+
+              {/* Comments footer mobile only */}
+              { authorUsername === comment?.username && (
+                <div className="post__comments__list__comment__footer">
+                    <PostDeleteButton />
+                </div>
+              )}
             </div>
           ))}
         </>

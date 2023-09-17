@@ -103,7 +103,7 @@ function PostCommentsModal({
 
 
           {commentsLoaded ? (
-            postComments.length > 0 && (
+            postComments?.length > 0 && (
               <PostCommentsList authorUsername={author?.username} comments={postComments} />
             )
           ) : (
