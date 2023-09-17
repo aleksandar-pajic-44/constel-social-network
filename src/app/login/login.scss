@@ -1,0 +1,48 @@
+@import '/src/app/assets/styles/palette';
+@import '/src/app/assets/styles/mixins';
+
+.login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__form {
+    width: 100%;
+    max-width: 24.125rem;
+
+    @include dynamic-flex(center, center, column, 1.5rem);
+
+    .form-group {
+      width: 100%;
+    }
+
+    label {
+      margin-bottom: .75rem;
+    }
+  }
+
+  &__submitButton {
+    padding: 1rem 3.9375rem;
+    font-weight: bold;
+    font-size: .93rem;
+
+    &__wrapper {
+      @include dynamic-flex(center, center);
+    }
+  }
+
+  &__errorMessage {
+    color: $gray-1;
+    padding: .3125rem;
+    margin: 0;
+    font-size: .9375rem;
+    text-align: center;
+    background-color: $danger;
+    border: 1px solid $danger;
+    border-radius: .625rem;
+    width: 100%;
+  }
+}
