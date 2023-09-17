@@ -135,6 +135,9 @@ export default function FeedPost({
             }}
             onPostDeleteSubmit={(postId: string, commentId: string) => {
               onPostDeleteSubmit(postId, commentId);
+
+              // Set new comment count
+              setCommentsCount((prevCommentsCount: number) => prevCommentsCount - 1);
             }}
           >
             {likesActionButton()}

@@ -99,7 +99,7 @@ export const createPostComment = async (postId: string, text: string): Promise<v
  * @returns {Promise<void>} A promise indicating success or failure.
 **/
 export const deletePostComment = async (postId: string, commentId: string): Promise<void> => {
-  const endpoint = `/post/${postId}/comments/${commentId}`;
+  const endpoint = `/posts/${postId}/comments/${commentId}`;
 
   try {
     const response = await axiosInstance.delete(endpoint);
