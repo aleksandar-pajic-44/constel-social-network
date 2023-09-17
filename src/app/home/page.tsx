@@ -24,12 +24,6 @@ import { createPostComment, getCommentsForPost, getFeedPosts, getUserDetails } f
 import { Account } from '../login/models/login';
 import { Post, PostComment } from './models/post';
 
-// Fix Next.js issue with rendering this component,
-// this code make sure that component is rendered on client side only
-const CommentsModal = dynamic(() => import('./components/commentsModal'), {
-  ssr: false,
-});
-
 export default function Home() {
   const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
   const [userDetails, setUserDetails] = useState<Account>();
