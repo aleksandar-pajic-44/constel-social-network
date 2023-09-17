@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 
 // Third-party libraries
 import { Nav } from 'react-bootstrap';

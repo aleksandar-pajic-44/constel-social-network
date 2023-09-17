@@ -10,7 +10,6 @@ import PostAuthorDetails from './authorDetails';
 import PostTimePosted from './timePosted';
 import PostCommentsModal from './commentsModal';
 
-import { likeOrUnlikePost } from '../services/user.service';
 import { Author, PostComment } from '../models/post';
 
 export default function FeedPost({
