@@ -1,10 +1,16 @@
 
 
 
+
 # Constellation Social Network - React / Next.js
 ![enter image description here](https://i.imgur.com/A0j9glP.jpg)
 
+
 This is a [Next.js](https://nextjs.org/) project and is part of a technical task for constel.co
+
+## Demo video
+
+> [Watch the application demo video](https://www.loom.com/share/4649940c1ad24606a50776787544cb87?sid=ecd1b588-9226-4b29-93d9-1ed54a1a11ed)
 
 ## Table of Contents
 
