@@ -16,7 +16,10 @@ const PostActionButton = ({
   onButtonClick?: () => void
 }) => (
   <Button
+    id={self.crypto.randomUUID()}
     variant={activeStatus ? 'primary' : 'tertiary'}
+    aria-label='Post action button'
+    aria-labelledby='postActionBtn'
     onClick={onButtonClick}
   >
     {iconType && (

@@ -14,7 +14,15 @@ const PostDeleteButton = ({
   };
 
   return (
-    <Button variant='link' size={'sm'} className="post__deleteBtn" onClick={handleClick}>
+    <Button
+      id='postDeleteBtn'
+      variant='link'
+      size={'sm'}
+      className="post__deleteBtn"
+      aria-label='Delete post button'
+      aria-labelledby='deletePostBtn1'
+      onClick={handleClick}
+    >
       <FontAwesomeIcon icon={faTrash} />
       Delete
     </Button>
