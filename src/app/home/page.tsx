@@ -211,8 +211,6 @@ export default function Home(): React.ReactNode {
                       return;
                     }
                     handlePostCreateSubmit(text, recordedBlob)
-                    // console.log(recordedBlob);
-                    // console.log(text);
                   }}/>
               ) : (
                 // Show content loader if data is not yet loaded
