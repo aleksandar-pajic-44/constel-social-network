@@ -50,7 +50,13 @@ export default function CreateInput({
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <Button variant="light" onClick={() => {handleOnSubmit(inputText)}}>
+      <Button
+        id='createInputSubmitBtn'
+        variant="light"
+        aria-label='Create input submit button'
+        aria-labelledby='createInputSubmitBtn1'
+        onClick={() => {handleOnSubmit(inputText)}}
+      >
         <FontAwesomeIcon icon={faPaperPlane} className='me-0'></FontAwesomeIcon>
       </Button>
     </InputGroup>

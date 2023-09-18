@@ -80,12 +80,12 @@ const LoginForm = ({ errorMessage, onFormSubmit }: { errorMessage?: string, onFo
           {/* Submit button */}
           <div className='login__submitButton__wrapper'>
             <Button
-              id='login-submit'
+              id='loginSubmitBtn'
               type='submit'
               className='login__submitButton'
               variant='secondary'
               aria-label='Confirm login button'
-              aria-labelledby='loginBtn1'>
+              aria-labelledby='loginSubmitBtn1'>
               Confirm
             </Button>
           </div>

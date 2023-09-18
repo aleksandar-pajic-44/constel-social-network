@@ -26,7 +26,13 @@ function NotFoundPage(): React.ReactNode {
           <p className='notFound__container__message'>Oops! It seems like you&apos;ve taken a wrong turn. The page you&apos;re looking for isn&apos;t here. Don&apos;t worry; it happens to the best of us.</p>
 
           <Link href='/home'>
-            <Button className='notFound__container__redirect' variant="outline-primary">
+            <Button
+              id='homeRedirectionBtn'
+              aria-label='Home redirection button'
+              aria-labelledby='homeRedirectionBtn1'
+              className='notFound__container__redirect'
+              variant="outline-primary"
+            >
               Back to Home
             </Button>
           </Link>

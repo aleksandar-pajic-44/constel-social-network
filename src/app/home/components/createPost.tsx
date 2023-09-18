@@ -39,10 +39,24 @@ export default function CreatePost({
 
         {/* Record action section */}
         <div className='home__main__feed__post__record'>
-          <Button variant='light' className='rounded-circle'>
+          <Button
+            id='voiceRecordBtn'
+            variant='light'
+            className='rounded-circle'
+            aria-label='Voice record button'
+            aria-labelledby='voiceRecordBtn1'
+          >
             <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
           </Button>
-          <Button className='record__button' variant='secondary'>New post</Button>
+          <Button
+            id='submitPostBtn'
+            className='record__button'
+            variant='secondary'
+            aria-label='Submit post button'
+            aria-labelledby='submitPostBtn1'
+          >
+            New post
+          </Button>
         </div>
       </div>
     </div>
