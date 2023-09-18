@@ -62,7 +62,7 @@ export default function LoginPage(): React.ReactNode {
     // Navigate to new page after successful login
     setTimeout(() => {
       window.location.reload();
-    }, 2500);
+    }, 1500);
   }
 
   const setTokenCookie = (token: string) => {

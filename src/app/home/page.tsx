@@ -179,7 +179,8 @@ export default function Home(): React.ReactNode {
                 <HomeComponents.CreatePost
                   userAccount={userDetails}
                   onPostCreateSubmit={(text: string) => {
-                    handlePostCreateSubmit(text);
+                    // handlePostCreateSubmit(text);
+                    console.log(text);
                   }}/>
               ) : (
                 // Show content loader if data is not yet loaded
