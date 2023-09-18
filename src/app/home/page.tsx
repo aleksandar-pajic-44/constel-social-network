@@ -13,7 +13,6 @@ import Image from 'next/image';
 
 // Components
 import HomeComponents from './components';
-import PageTitle from '../components/head';
 
 // Services
 import { createNewPost, createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
@@ -128,8 +127,6 @@ export default function Home(): React.ReactNode {
 
   return (
     <>
-      <PageTitle title='Home feed' />
-
       <article className='home__wrapper'>
         {/* Grid */}
         <section className='home'>
