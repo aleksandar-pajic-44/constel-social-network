@@ -15,7 +15,15 @@ import Image from 'next/image';
 import HomeComponents from './components';
 
 // Services
-import { createNewPost, createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
+import {
+  createNewPost,
+  createPostComment,
+  deletePostComment,
+  getCommentsForPost,
+  getFeedPosts,
+  getUserDetails,
+  likeOrUnlikePost
+} from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
@@ -28,8 +36,9 @@ export default function Home(): React.ReactNode {
   const [userDetails, setUserDetails] = useState<Account>();
   const [feedPosts, setFeedPosts] = useState<Post[]>([]);
   const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
-  const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
-  const [showDeletePostToast, setShowDeletePostToast] = useState<boolean>(false);
+  const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments loaded state
+  const [showSuccessNotification, setShowSuccessNotification] = useState<boolean>(false); // State to show toast
+  const [successMessage, setSuccessMessage] = useState<string>(''); // State to store the toast message
 
   useEffect(() => {
     const fetchUserData = (): void => {
@@ -107,22 +116,40 @@ export default function Home(): React.ReactNode {
     deletePostComment(postId, commentId).then(() => {
       // Refresh the comments after deletion
       handleFetchPostComments(postId);
-      setShowDeletePostToast(true);
+      setShowSuccessNotification(true);
+      setSuccessMessage('You have successfully deleted your comment post.')
     })
     .catch((error: any) => {
       console.error("Error deleting comment:", error);
     });
   };
 
-  const handlePostCreateSubmit = (text: string) => {
-    createNewPost(text)
-      .then((newPost: Post) => {
-        // Update the feedPosts state by adding the new post to the existing array
-        setFeedPosts((prevFeedPosts) => [newPost, ...prevFeedPosts]);
-      })
-      .catch((error) => {
-        console.error('Error creating post:', error);
-      });
+  const handlePostCreateSubmit = (text: string, recordedBlob?: Blob | null) => {
+    if (recordedBlob) {
+      // If the recordedBlob exists, create a new post with both text and blob
+      createNewPost(text, recordedBlob)
+        .then((newPost: Post) => {
+          // Update the feedPosts state by adding the new post to the existing array
+          setFeedPosts((prevFeedPosts) => [newPost, ...prevFeedPosts]);
+          setShowSuccessNotification(true);
+          setSuccessMessage('You have successfully created a new post.')
+        })
+        .catch((error) => {
+          console.error('Error creating post with blob:', error);
+        });
+    } else {
+      // If recordedBlob is not provided, create a new post with only text
+      createNewPost(text)
+        .then((newPost: Post) => {
+          // Update the feedPosts state by adding the new post to the existing array
+          setFeedPosts((prevFeedPosts) => [newPost, ...prevFeedPosts]);
+          setShowSuccessNotification(true);
+          setSuccessMessage('You have successfully created a new post.')
+        })
+        .catch((error) => {
+          console.error('Error creating post without blob:', error);
+        });
+    }
   };
 
   return (
@@ -178,8 +205,14 @@ export default function Home(): React.ReactNode {
               { userDetails ? (
                 <HomeComponents.CreatePost
                   userAccount={userDetails}
-                  onPostCreateSubmit={(text: string) => {
-                    handlePostCreateSubmit(text);
+                  onPostCreateSubmit={(text: string, recordedBlob?: Blob | null) => {
+                    if(!recordedBlob) {
+                      handlePostCreateSubmit(text);
+                      return;
+                    }
+                    handlePostCreateSubmit(text, recordedBlob)
+                    // console.log(recordedBlob);
+                    // console.log(text);
                   }}/>
               ) : (
                 // Show content loader if data is not yet loaded
@@ -231,16 +264,16 @@ export default function Home(): React.ReactNode {
       <ToastContainer position={'bottom-end'} className='mb-3'>
         <Toast
           bg='success'
-          onClose={() => setShowDeletePostToast(false)}
-          show={showDeletePostToast}
+          onClose={() => setShowSuccessNotification(false)}
+          show={showSuccessNotification}
           delay={2000}
           autohide
         >
           <Toast.Header>
-            <strong className="me-auto">Comment deleted</strong>
+            <strong className="me-auto">Success!</strong>
           </Toast.Header>
           <Toast.Body className='text-light'>
-            You&apos;ve successfully deleted the post comment.
+            {successMessage}
           </Toast.Body>
         </Toast>
       </ToastContainer>

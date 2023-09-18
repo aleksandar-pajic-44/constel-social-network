@@ -100,8 +100,7 @@ export default function FeedPost({
           <Image
             id={`${author?.username}-post-image`}
             src={imageUrl}
-            priority={true}
-            fetchPriority={'high'}
+            loading='lazy'
             width={668}
             height={285}
             className='post__image'
