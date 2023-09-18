@@ -228,6 +228,11 @@
 
     button.btn {
       @include dynamic-flex(center, center, row);
+      width: 50%;
+
+      @media #{$mobile-m} {
+        width: auto;
+      }
 
       svg {
         margin-right: .75rem;
@@ -264,7 +269,6 @@
 
         &__footer {
           @include dynamic-flex(center, center);
-
           padding-top: 0.75rem;
           margin-top: 0.75rem;
           border-top: 1px solid $gray-2;
