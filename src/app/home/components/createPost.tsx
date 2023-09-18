@@ -166,8 +166,8 @@ export default function CreatePost({
                   id='pauseRecordingButton'
                   variant='primary'
                   className='rounded-circle'
-                  aria-label='Voice record button'
-                  aria-labelledby='voiceRecordBtn1'
+                  aria-label='Pause voice recording'
+                  aria-labelledby='pauseRecordingBtn1'
                   onClick={() => {
                     handleAudioPlaybackPlay(isRecordingPaused)
                   }}
@@ -188,8 +188,8 @@ export default function CreatePost({
                   id='stopRecordingButton'
                   variant='danger'
                   className='rounded-circle me-1'
-                  aria-label='Voice record button'
-                  aria-labelledby='voiceRecordBtn1'
+                  aria-label='Stop voice recording button'
+                  aria-labelledby='stopRecordingBtn1'
                   onClick={handleStopRecording}
                 >
                   <FontAwesomeIcon className='me-0' icon={faStop} />
@@ -237,8 +237,8 @@ export default function CreatePost({
                 id='startRecordingButton'
                 variant='link'
                 className='rounded-circle me-1'
-                aria-label='Voice record button'
-                aria-labelledby='voiceRecordBtn1'
+                aria-label='Start recording button'
+                aria-labelledby='startRecordingBtn1'
                 onClick={handleStartRecording}
               >
                 <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
@@ -254,8 +254,8 @@ export default function CreatePost({
                   id='clearRecordingButton'
                   variant='danger'
                   className='rounded-circle'
-                  aria-label='Voice record button'
-                  aria-labelledby='voiceRecordBtn1'
+                  aria-label='Delete voice record button'
+                  aria-labelledby='deleteVoiceRecordBtn1'
                   onClick={handleClearCanvas}
                 >
                   <FontAwesomeIcon className='me-0' icon={faTrash} />
