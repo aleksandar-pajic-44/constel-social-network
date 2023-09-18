@@ -133,7 +133,7 @@ export const deletePostComment = async (postId: string, commentId: string): Prom
  * @param {File} audio - Audio file.
  * @returns {Promise<Post>} A promise containing the newly created post.
 **/
-export const createNewPost = async (text: string, audio?: File): Promise<Post> => {
+export const createNewPost = async (text: string, audio?: Blob): Promise<Post> => {
   const endpoint = '/posts';
 
   try {

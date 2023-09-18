@@ -117,6 +117,12 @@
           @include dynamic-flex(center, space-between, row);
           margin-top: 1rem;
 
+          &__newPost {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+
           .record {
             &__button {
               padding: 1rem 3.625rem;
@@ -337,7 +343,6 @@ button.btn {
   }
 }
 
-
 .profile {
   &__image {
     object-fit: cover
@@ -388,5 +393,34 @@ button.btn {
         font-size: 1.1875rem
       }
     }
+  }
+}
+
+.vizualizerSection {
+  @include dynamic-flex(center, space-evenly, row, 1rem);
+  padding: .75rem 1.25rem;
+  background-color: #EFEFEF;
+  border-radius: .625rem;
+  margin-top: 1.5rem;
+
+  &--invalid {
+    border: 2px solid $danger;
+  }
+
+  &__errorMessage {
+    color: $gray-1;
+    padding: .3125rem;
+    margin-top: 1rem;
+    font-size: .9375rem;
+    text-align: center;
+    background-color: $danger;
+    border: 1px solid $danger;
+    border-radius: .625rem;
+    width: 100%;
+  }
+
+  &__time {
+    color: $gray-3;
+    font-size: 0.875rem;
   }
 }
