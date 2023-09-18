@@ -230,21 +230,23 @@ export default function CreatePost({
 
         {/* Record action section */}
         <div className='home__main__feed__post__record'>
-          {hasRecordingStarted && (
-            <>
-              {/* Start recording button */}
-              <Button
-                id='startRecordingButton'
-                variant='link'
-                className='rounded-circle me-1'
-                aria-label='Start recording button'
-                aria-labelledby='startRecordingBtn1'
-                onClick={handleStartRecording}
-              >
-                <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
-              </Button>
-            </>
-          )}
+          <div className='recorderWrapper'>
+            {hasRecordingStarted && (
+              <>
+                {/* Start recording button */}
+                <Button
+                  id='startRecordingButton'
+                  variant='link'
+                  className='rounded-circle me-1'
+                  aria-label='Start recording button'
+                  aria-labelledby='startRecordingBtn1'
+                  onClick={handleStartRecording}
+                >
+                  <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
+                </Button>
+              </>
+            )}
+          </div>
 
           <div className='home__main__feed__post__record__newPost'>
             { (!hasRecordingStarted || recordedBlob) && (
