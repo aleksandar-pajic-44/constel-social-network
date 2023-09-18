@@ -28,7 +28,16 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <PageTitle />
+      <PageTitle
+        title="Social Network"
+        description="We create growth hacking solutions. Our products have helped over 80.000 customers grow their Social Media accounts. We believe marketing can be so much more than just ads."
+        imageUrl="https://i.imgur.com/A0j9glP.jpg"
+        imageAlt="Constellation cover photo"
+        locale="en_GB"
+        type="website"
+        twitterCard="summary_large_image"
+        canonicalUrl="http://constel.co"
+      />
 
       <body className={roboto.className}>
         <CookiesProvider defaultSetOptions={{ path: '/'}}>

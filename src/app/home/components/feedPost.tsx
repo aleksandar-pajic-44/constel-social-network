@@ -9,6 +9,7 @@ import PostActionButton from './actionButton';
 import PostAuthorDetails from './authorDetails';
 import PostTimePosted from './timePosted';
 import PostCommentsModal from './commentsModal';
+import PostAudioPlayer from './audioPlayer';
 
 import { Author, PostComment } from '../models/post';
 import { Account } from '@/app/login/models/login';
@@ -18,6 +19,7 @@ export default function FeedPost({
   author,
   timePosted,
   imageUrl,
+  audioUrl,
   description,
   likes,
   comments,
@@ -34,6 +36,7 @@ export default function FeedPost({
   author: Author,
   timePosted: string,
   imageUrl?: string,
+  audioUrl?: string,
   description: string,
   likes: number,
   comments: number,
@@ -45,7 +48,7 @@ export default function FeedPost({
   toggleLikeStatus: (postId: string, isLiked: boolean) => void,
   onCreateCommentSubmit: (postId: string, text: string) => void,
   onPostDeleteSubmit: (postId: string, commentId: string) => void
-}) {
+}): React.ReactNode {
 
   // State to track liked status
   const [isPostLiked, setIsPostLiked] = useState<boolean>(liked);
@@ -106,6 +109,11 @@ export default function FeedPost({
             aria-labelledby={`${author?.username}PostImage`}
             alt={`${author?.full_name} post image`}
           />
+        )}
+
+        {/* Show Audio if exists */}
+        {audioUrl && (
+          <PostAudioPlayer audioUrl={audioUrl} />
         )}
 
         {/* Post description */}

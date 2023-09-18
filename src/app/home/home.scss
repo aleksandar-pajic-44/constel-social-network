@@ -5,7 +5,6 @@
 .home {
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   justify-content: center;
 
@@ -60,12 +59,7 @@
     width: 100%;
     max-width: 49.75rem;
     border: none;
-    animation: hideScrollbar 100ms ease-in-out forwards; /* Add an animation effect */
-
-    &.show-scrollbar {
-      overflow-y: auto;
-      animation: showScrollbar 100ms ease-in-out forwards; /* Override the animation when the class is added */
-    }
+    overflow-y: overlay;
 
     &__headingTitle {
       @include dynamic-flex(center, center);
@@ -169,24 +163,6 @@
       border-right: 1px solid $gray-2;
       border-left: 1px solid $gray-2;
     }
-
-    @keyframes showScrollbar {
-      from {
-        overflow-y: hidden;
-      }
-      to {
-        overflow-y: auto;
-      }
-    }
-
-    @keyframes hideScrollbar {
-      from {
-        overflow-y: auto;
-      }
-      to {
-        overflow-y: hidden;
-      }
-    }
   }
 }
 
@@ -252,6 +228,11 @@
 
     button.btn {
       @include dynamic-flex(center, center, row);
+      width: 50%;
+
+      @media #{$mobile-m} {
+        width: auto;
+      }
 
       svg {
         margin-right: .75rem;
@@ -288,7 +269,6 @@
 
         &__footer {
           @include dynamic-flex(center, center);
-
           padding-top: 0.75rem;
           margin-top: 0.75rem;
           border-top: 1px solid $gray-2;

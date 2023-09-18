@@ -21,7 +21,7 @@ import { loginUser } from './services/login.service';
 // Models & Enums
 import { LOGIN_STATUS, LoginCredentials } from './models/login';
 
-export default function LoginPage() {
+export default function LoginPage(): React.ReactNode {
   const [cookies, setCookie] = useCookies<any>(['token']);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [showLoginSuccessToast, setShowLoginSuccessToast] = useState<boolean>(false);
@@ -56,13 +56,12 @@ export default function LoginPage() {
       });
   };
 
-
   const handleSuccessfulLogin = (): void => {
     setShowLoginSuccessToast(true);
 
     // Navigate to new page after successful login
     setTimeout(() => {
-      router.push('/');
+      window.location.reload();
     }, 2500);
   }
 

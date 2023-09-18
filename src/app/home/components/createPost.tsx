@@ -8,7 +8,13 @@ import CreateInput from './createInput';
 
 import { Account } from '@/app/login/models/login';
 
-export default function CreatePost({ userAccount }: { userAccount: Account }) {
+export default function CreatePost({
+  userAccount,
+  onPostCreateSubmit
+}: {
+  userAccount: Account,
+  onPostCreateSubmit: (text: string) => void
+}): React.ReactNode {
   return (
     <div className="home__main__feed__post card">
       <div className="card-body">
@@ -27,16 +33,30 @@ export default function CreatePost({ userAccount }: { userAccount: Account }) {
 
           {/* Input field */}
           <CreateInput placeholder="What's happening" onSubmit={(text: string) => {
-            console.log(text);
+            onPostCreateSubmit(text);
           }}/>
         </div>
 
         {/* Record action section */}
         <div className='home__main__feed__post__record'>
-          <Button variant='light' className='rounded-circle'>
+          <Button
+            id='voiceRecordBtn'
+            variant='light'
+            className='rounded-circle'
+            aria-label='Voice record button'
+            aria-labelledby='voiceRecordBtn1'
+          >
             <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
           </Button>
-          <Button className='record__button' variant='secondary'>New post</Button>
+          <Button
+            id='submitPostBtn'
+            className='record__button'
+            variant='secondary'
+            aria-label='Submit post button'
+            aria-labelledby='submitPostBtn1'
+          >
+            New post
+          </Button>
         </div>
       </div>
     </div>

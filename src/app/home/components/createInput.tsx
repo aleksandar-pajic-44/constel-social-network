@@ -6,7 +6,13 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-export default function CreateInput({ placeholder, onSubmit }: { placeholder?: string, onSubmit: (text: string) => void }) {
+export default function CreateInput({
+  placeholder,
+  onSubmit
+}: {
+  placeholder?: string,
+  onSubmit: (text: string) => void
+}): React.ReactNode {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputText, setInputText] = useState<string>('');
 
@@ -44,7 +50,13 @@ export default function CreateInput({ placeholder, onSubmit }: { placeholder?: s
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <Button variant="light" onClick={() => {handleOnSubmit(inputText)}}>
+      <Button
+        id='createInputSubmitBtn'
+        variant="light"
+        aria-label='Create input submit button'
+        aria-labelledby='createInputSubmitBtn1'
+        onClick={() => {handleOnSubmit(inputText)}}
+      >
         <FontAwesomeIcon icon={faPaperPlane} className='me-0'></FontAwesomeIcon>
       </Button>
     </InputGroup>
