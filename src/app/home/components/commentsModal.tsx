@@ -43,7 +43,7 @@ function PostCommentsModal({
   fetchPostComments: (postId: string) => void,
   onCreateCommentSubmit: (postId: string, text: string) => void,
   onPostDeleteSubmit: (postId: string, commentId: string) => void
-}) {
+}): React.ReactNode {
   const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false); // State to show or hide modal
 
   const handleCloseModal = (): void => setShowCommentsModal(false);

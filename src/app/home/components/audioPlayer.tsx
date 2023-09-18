@@ -22,10 +22,12 @@ const PostAudioPlayer = ({ audioUrl }: { audioUrl: string }) => {
         console.error('Error fetching or converting audio:', error);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     fetchAudioAndConvertToBlob();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

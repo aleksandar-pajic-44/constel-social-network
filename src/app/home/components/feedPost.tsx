@@ -48,7 +48,7 @@ export default function FeedPost({
   toggleLikeStatus: (postId: string, isLiked: boolean) => void,
   onCreateCommentSubmit: (postId: string, text: string) => void,
   onPostDeleteSubmit: (postId: string, commentId: string) => void
-}) {
+}): React.ReactNode {
 
   // State to track liked status
   const [isPostLiked, setIsPostLiked] = useState<boolean>(liked);

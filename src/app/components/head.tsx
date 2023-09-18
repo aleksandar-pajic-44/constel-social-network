@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function PageTitle({ title } : { title?: string }) {
+export default function PageTitle({ title } : { title?: string }): React.ReactNode {
   return (
     <Head>
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

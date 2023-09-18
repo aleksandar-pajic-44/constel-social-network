@@ -22,7 +22,7 @@ import { createNewPost, createPostComment, deletePostComment, getCommentsForPost
 import { Account } from '../login/models/login';
 import { Post, PostComment } from './models/post';
 
-export default function Home() {
+export default function Home(): React.ReactNode {
   const router = useRouter();
 
   const [cookies] = useCookies(['token']);

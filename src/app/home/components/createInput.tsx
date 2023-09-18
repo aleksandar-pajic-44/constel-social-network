@@ -6,7 +6,13 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-export default function CreateInput({ placeholder, onSubmit }: { placeholder?: string, onSubmit: (text: string) => void }) {
+export default function CreateInput({
+  placeholder,
+  onSubmit
+}: {
+  placeholder?: string,
+  onSubmit: (text: string) => void
+}): React.ReactNode {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputText, setInputText] = useState<string>('');
 

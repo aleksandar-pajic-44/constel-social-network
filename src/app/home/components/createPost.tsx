@@ -14,7 +14,7 @@ export default function CreatePost({
 }: {
   userAccount: Account,
   onPostCreateSubmit: (text: string) => void
-}) {
+}): React.ReactNode {
   return (
     <div className="home__main__feed__post card">
       <div className="card-body">

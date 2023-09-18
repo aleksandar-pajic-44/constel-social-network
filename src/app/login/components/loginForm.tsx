@@ -11,7 +11,7 @@ import { loginValidationSchema } from '../validation/login-validation';
 // Models
 import { LoginCredentials } from '../models/login';
 
-const LoginForm = ({ errorMessage, onFormSubmit }: { errorMessage?: string, onFormSubmit: Function }) => {
+const LoginForm = ({ errorMessage, onFormSubmit }: { errorMessage?: string, onFormSubmit: Function }): React.ReactNode => {
   const { Formik } = formik;
 
   const onSubmit: Function = (formValue: LoginCredentials) => {
