@@ -125,7 +125,7 @@ function PostCommentsModal({
                 }}/>
             )
           ) : (
-            <PostCommentsListLoader count={3} />
+            <PostCommentsListLoader count={2} />
           )}
         </Modal.Body>
       </Modal>

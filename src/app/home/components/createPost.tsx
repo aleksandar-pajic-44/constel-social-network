@@ -8,7 +8,13 @@ import CreateInput from './createInput';
 
 import { Account } from '@/app/login/models/login';
 
-export default function CreatePost({ userAccount }: { userAccount: Account }) {
+export default function CreatePost({
+  userAccount,
+  onPostCreateSubmit
+}: {
+  userAccount: Account,
+  onPostCreateSubmit: (text: string) => void
+}) {
   return (
     <div className="home__main__feed__post card">
       <div className="card-body">
@@ -27,7 +33,7 @@ export default function CreatePost({ userAccount }: { userAccount: Account }) {
 
           {/* Input field */}
           <CreateInput placeholder="What's happening" onSubmit={(text: string) => {
-            console.log(text);
+            onPostCreateSubmit(text);
           }}/>
         </div>
 

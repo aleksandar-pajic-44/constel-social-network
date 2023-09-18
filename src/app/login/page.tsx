@@ -56,13 +56,12 @@ export default function LoginPage() {
       });
   };
 
-
   const handleSuccessfulLogin = (): void => {
     setShowLoginSuccessToast(true);
 
     // Navigate to new page after successful login
     setTimeout(() => {
-      router.push('/');
+      window.location.reload();
     }, 2500);
   }
 

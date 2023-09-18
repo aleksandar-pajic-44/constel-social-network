@@ -19,11 +19,21 @@ export const getUserDetails = async (): Promise<Account>  => {
 export const getFeedPosts = async (): Promise<Post[]> => {
   try {
     const response = await axiosInstance.get('/posts');
-    return response.data.posts;
+    const posts: Post[] = response.data.posts;
+
+    // Sort the posts by created_at in descending order
+    const sortedPosts = posts.sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime();
+      const dateB = new Date(b.created_at).getTime();
+      return dateB - dateA;
+    });
+
+    return sortedPosts;
   } catch (error: any) {
     throw error;
   }
 };
+
 
 /**
  * Like or unlike a post depending on the current isLiked state.
@@ -111,6 +121,45 @@ export const deletePostComment = async (postId: string, commentId: string): Prom
       throw new Error(response.data.error.message);
     } else {
       throw new Error("Failed to delete the comment");
+    }
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+/**
+ * Create a new post.
+ * @param {string} text - Post text.
+ * @param {File} audio - Audio file.
+ * @returns {Promise<Post>} A promise containing the newly created post.
+**/
+export const createNewPost = async (text: string, audio?: File): Promise<Post> => {
+  const endpoint = '/posts';
+
+  try {
+    const formData = new FormData();
+    formData.append('text', text);
+
+    if (audio) {
+      formData.append('audio', audio);
+    }
+
+    const response = await axiosInstance.post(endpoint, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // explicitly set content type
+      },
+    });
+
+    if (response.status === 200 && response.data.status === 'ok') {
+      return response.data.post;
+    } else if (response.status === 400 && response.data.status === 'error') {
+      if (response.data.error.message === 'Text cannot be empty!') {
+        throw new Error('Text cannot be empty!');
+      } else {
+        throw new Error('Failed to create the post');
+      }
+    } else {
+      throw new Error('Failed to create the post');
     }
   } catch (error: any) {
     throw error;

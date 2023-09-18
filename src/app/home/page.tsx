@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { Nav, Toast, ToastContainer } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { MutableRefObject, useRef } from 'react';
 import Image from 'next/image';
 
 // Components
@@ -17,19 +16,18 @@ import HomeComponents from './components';
 import PageTitle from '../components/head';
 
 // Services
-import { createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
+import { createNewPost, createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
 import { Post, PostComment } from './models/post';
 
 export default function Home() {
-  const mainContainerRef = useRef() as MutableRefObject<HTMLDivElement>;
   const router = useRouter();
 
   const [cookies] = useCookies(['token']);
   const [userDetails, setUserDetails] = useState<Account>();
-  const [feedPosts, setFeedPosts] = useState<Post[]>();
+  const [feedPosts, setFeedPosts] = useState<Post[]>([]);
   const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
   const [commentsLoaded, setCommentsLoaded] = useState<boolean>(false); // State to store comments
   const [showDeletePostToast, setShowDeletePostToast] = useState<boolean>(false);
@@ -117,14 +115,15 @@ export default function Home() {
     });
   };
 
-  const handleMouseEnter = (): void => {
-    // Add a class to show the scrollbar when the user hovers over the container
-    mainContainerRef?.current.classList.add('show-scrollbar');
-  };
-
-  const handleMouseLeave = (): void => {
-    // Remove the class to hide the scrollbar when the user stops hovering
-    mainContainerRef?.current.classList.remove('show-scrollbar');
+  const handlePostCreateSubmit = (text: string) => {
+    createNewPost(text)
+      .then((newPost: Post) => {
+        // Update the feedPosts state by adding the new post to the existing array
+        setFeedPosts((prevFeedPosts) => [newPost, ...prevFeedPosts]);
+      })
+      .catch((error) => {
+        console.error('Error creating post:', error);
+      });
   };
 
   return (
@@ -161,11 +160,7 @@ export default function Home() {
           </header>
 
           {/* Main column */}
-          <main className='home__main'
-            ref={mainContainerRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
+          <main className='home__main'>
             <div className='home__main__headingTitle'>
               <h1>Home</h1>
 
@@ -184,22 +179,27 @@ export default function Home() {
             {/* Main feed section */}
             <div className='home__main__feed'>
               { userDetails ? (
-                <HomeComponents.CreatePost userAccount={userDetails}/>
+                <HomeComponents.CreatePost
+                  userAccount={userDetails}
+                  onPostCreateSubmit={(text: string) => {
+                    handlePostCreateSubmit(text);
+                  }}/>
               ) : (
                 // Show content loader if data is not yet loaded
                 <HomeComponents.CreatePostLoader />
               )}
 
               {/* Feed with posts */}
-                {feedPosts ? (
+                {feedPosts.length > 0 ? (
                   <>
-                    {feedPosts.map(({ post_id, user, created_at, image, text, likes, comments, liked }: Post) => (
+                    {feedPosts.map(({ post_id, user, created_at, image, text, likes, comments, liked, audio }: Post) => (
                       <HomeComponents.FeedPost
                         key={post_id}
                         userDetails={userDetails || undefined}
                         author={user}
                         timePosted={created_at}
                         imageUrl={image}
+                        audioUrl={audio}
                         description={text}
                         likes={likes}
                         comments={comments}

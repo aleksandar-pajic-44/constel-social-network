@@ -9,6 +9,7 @@ import PostTimePosted from './timePosted';
 import PostDeleteButton from './deletePostButton';
 import PostCommentsList from './commentsList';
 import PostCommentsListLoader from './commentsListLoader';
+import PostAudioPlayer from './audioPlayer';
 
 // Export them as a single object
 const HomeComponents = {
@@ -22,6 +23,7 @@ const HomeComponents = {
   PostDeleteButton,
   PostCommentsList,
   PostCommentsListLoader,
+  PostAudioPlayer
 };
 
 export default HomeComponents;
