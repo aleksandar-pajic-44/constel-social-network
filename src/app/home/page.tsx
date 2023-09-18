@@ -15,7 +15,15 @@ import Image from 'next/image';
 import HomeComponents from './components';
 
 // Services
-import { createNewPost, createPostComment, deletePostComment, getCommentsForPost, getFeedPosts, getUserDetails, likeOrUnlikePost } from './services/user.service';
+import {
+  createNewPost,
+  createPostComment,
+  deletePostComment,
+  getCommentsForPost,
+  getFeedPosts,
+  getUserDetails,
+  likeOrUnlikePost
+} from './services/user.service';
 
 // Models
 import { Account } from '../login/models/login';
