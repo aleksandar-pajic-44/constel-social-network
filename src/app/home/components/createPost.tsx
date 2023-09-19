@@ -165,7 +165,6 @@ export default function CreatePost({
                 <Button
                   id='pauseRecordingButton'
                   variant='primary'
-                  className='rounded-circle'
                   aria-label='Pause voice recording'
                   aria-labelledby='pauseRecordingBtn1'
                   onClick={() => {
@@ -182,12 +181,12 @@ export default function CreatePost({
             )}
 
             {!hasRecordingStarted && (
-              <div>
+              <div className='stopRecording'>
                 {/* Stop recording button */}
                 <Button
                   id='stopRecordingButton'
                   variant='danger'
-                  className='rounded-circle me-1'
+                  className='me-1'
                   aria-label='Stop voice recording button'
                   aria-labelledby='stopRecordingBtn1'
                   onClick={handleStopRecording}
@@ -210,6 +209,7 @@ export default function CreatePost({
               controls={recorderControls}
               rounded={1}
               useBeforeUnloadEvent={false}
+              canvasContainerClassName={'customVoiceContainer'}
             />
 
             {(isRecordingInProgress) && (
@@ -237,12 +237,13 @@ export default function CreatePost({
                 <Button
                   id='startRecordingButton'
                   variant='link'
-                  className='rounded-circle me-1'
+                  className='me-1'
                   aria-label='Start recording button'
                   aria-labelledby='startRecordingBtn1'
                   onClick={handleStartRecording}
                 >
                   <FontAwesomeIcon className='record__icon' icon={faMicrophone} />
+                  <span>Record audio</span>
                 </Button>
               </>
             )}
