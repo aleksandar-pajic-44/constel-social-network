@@ -114,13 +114,68 @@
         }
 
         &__record {
-          @include dynamic-flex(center, space-between, row);
+          @include dynamic-flex(center, space-between, column, 1rem);
           margin-top: 1rem;
+
+          @media #{$mobile-m} {
+            @include dynamic-flex(center, space-between, row);
+          }
+
+          .recorderWrapper {
+            width: 100%;
+
+            @media #{$mobile-m} {
+              width: fit-content;
+              border-radius: 50%;
+            }
+
+            button.btn-link {
+              width: 100%;
+              background-color: $primary;
+              display: flex;
+              justify-content: center;
+              gap: 1rem;
+
+              svg {
+                color: $white;
+              }
+
+              span {
+                display: block;
+                color: $white;
+                font-style: normal;
+              }
+
+              @media #{$mobile-m} {
+                width: auto;
+                border-radius: 50%;
+                background-color: transparent;
+                display: block;
+
+                svg {
+                  color: $primary;
+                }
+
+                span {
+                  display: none;
+                }
+              }
+            }
+          }
 
           &__newPost {
             display: flex;
             align-items: center;
             gap: 1rem;
+            width: 100%;
+
+            #submitPostBtn {
+              width: 100%;
+            }
+
+            @media #{$mobile-m} {
+              width: auto;
+            }
           }
 
           .record {
@@ -397,14 +452,54 @@ button.btn {
 }
 
 .vizualizerSection {
-  @include dynamic-flex(center, space-evenly, row, 1rem);
+  @include dynamic-flex(center, space-evenly, column, 1rem);
   padding: .75rem 1.25rem;
   background-color: #EFEFEF;
   border-radius: .625rem;
   margin-top: 1.5rem;
+  flex-direction: column-reverse;
+
+  .stopRecording {
+    width: 100%;
+
+    @media #{$tablet} {
+      width: auto;
+    }
+  }
+
+  button.btn {
+    width: 100%;
+
+    @media #{$tablet} {
+      border-radius: 50%;
+      width: auto;
+    }
+  }
 
   &--invalid {
     border: 2px solid $danger;
+  }
+
+  .voice-visualizer {
+    width: 100%;
+    overflow: hidden;
+
+    .customVoiceContainer {
+      width: 100% !important;
+
+      @media #{$mobile-l} {
+        width: auto;
+      }
+
+      canvas {
+        width: 100% !important;
+      }
+    }
+
+    @media #{$mobile-l} {
+      width: 100%;
+      overflow: visible;
+    }
   }
 
   &__errorMessage {
@@ -422,5 +517,9 @@ button.btn {
   &__time {
     color: $gray-3;
     font-size: 0.875rem;
+  }
+
+  @media #{$tablet} {
+    flex-direction: row;
   }
 }
