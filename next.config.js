@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    DB_HOST: process.env.DB_HOST,
+    NEXT_PUBLIC_DB_HOST: process.env.NEXT_PUBLIC_DB_HOST,
   },
   async redirects() {
     return [

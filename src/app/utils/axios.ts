@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 // Create a new Axios instance with custom defaults
 const axiosInstance = axios.create({
-  baseURL: process.env.DB_HOST,
+  baseURL: process.env.NEXT_PUBLIC_DB_HOST,
   headers: {
     'Content-Type': 'application/json',
   },
