@@ -1,5 +1,5 @@
 
-# Constellation Social Network - React / Next.js
+# Social Network Application - React / Next.js
 
 Constel Social Network is a web application built with [Next.js](https://nextjs.org/) that offers a social media platform where users can interact with posts, create new content, and engage with their friends. Here's a summary of its key functionality:
 
