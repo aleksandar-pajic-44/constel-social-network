@@ -51,7 +51,7 @@ Constel Social Network is a web application built with [Next.js](https://nextjs.
 - The application follows a design provided in Figma, which includes both mobile and desktop layouts.
 - FontAwesome icons are used, except for the logo, which can be copied from the Figma design as an SVG.
 
-For a detailed look at the design and additional implementation details, please refer to the [Figma design link](https://www.figma.com/file/CsDymzCuWqFQNzSHBTdZR1/Front-End-Zadatak?type=design&node-id=0-1&mode=design).
+For a detailed look at the design and additional implementation details, please refer to the [Figma design link](https://www.figma.com/file/q9NHQ8YyLnlWRprXOGgbVJ/Social-Network-UI-Concept-Design?type=design&node-id=0%3A1&mode=design&t=HZvNzngrqImLeqz9-1).
 
 This project is a demo that offers a comprehensive social network experience with features for posting, liking, commenting, and more, making it a great platform for connecting with friends and sharing content.
 
