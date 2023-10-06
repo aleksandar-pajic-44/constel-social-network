@@ -1,9 +1,9 @@
 
 # Social Network Application - React / Next.js
 
-Constel Social Network is a web application built with [Next.js](https://nextjs.org/) that offers a social media platform where users can interact with posts, create new content, and engage with their friends. Here's a summary of its key functionality:
+Constel Social Network is a web application built with [Next.js](https://nextjs.org/) that offers a social media platform where users can interact with posts, create new content, create and visualize audio recordings, and engage with their friends. Here's a summary of its key functionality:
 
-> [Watch the application demo video](https://www.loom.com/share/4649940c1ad24606a50776787544cb87?sid=ecd1b588-9226-4b29-93d9-1ed54a1a11ed)
+> [Watch the application demo video](https://www.loom.com/share/c243c2cdf4aa44bab76ef56409165646?sid=cf38de98-6a69-471d-8e9e-7f44a98e7633)
 > 
  - **Live website:** https://constel-social-network.vercel.app/home
  - **Credentials:** *pajicaleksandar44@gmail.com* / *mH5gx86dwSgSVBE*
