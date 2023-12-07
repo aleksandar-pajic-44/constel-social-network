@@ -21,6 +21,10 @@
       padding: 1rem 2rem;
     }
 
+    &__link {
+      @include dynamic-flex(center, flex-start, row, .5rem);
+    }
+
     &__links {
       .nav {
         @include dynamic-flex(flex-start, center, column, .5rem);

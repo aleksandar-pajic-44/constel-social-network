@@ -4,12 +4,12 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 // Third-party libraries
 import { Nav, Toast, ToastContainer } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image';
+import { faArrowRightFromBracket, faHome } from '@fortawesome/free-solid-svg-icons';
 
 // Components
 import HomeComponents from './components';
@@ -32,7 +32,7 @@ import { Post, PostComment } from './models/post';
 export default function Home(): React.ReactNode {
   const router = useRouter();
 
-  const [cookies] = useCookies(['token']);
+  const [cookies, removeCookie] = useCookies(['token']);
   const [userDetails, setUserDetails] = useState<Account>();
   const [feedPosts, setFeedPosts] = useState<Post[]>([]);
   const [postComments, setPostComments] = useState<PostComment[]>([]); // State to store comments
@@ -88,6 +88,11 @@ export default function Home(): React.ReactNode {
       console.error("Error retrieving comments:", error);
     });
   }
+
+  const logoutUser = () => {
+    // Remove the 'token' cookie which will log out user
+    removeCookie('token', '', { path: '/' });
+  };
 
   const handleLikeStatus = (postId: string, isLiked: boolean): void => {
     const action = isLiked ? 'unlike' : 'like';
@@ -174,9 +179,18 @@ export default function Home(): React.ReactNode {
             <div className='home__header__links'>
               <Nav variant="pills" activeKey="1">
                 <Nav.Item>
-                  <Nav.Link href="#">
+                  <Nav.Link className='home__header__link'>
                     <FontAwesomeIcon icon={faHome} />
                     Home
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item onClick={() => {
+                  logoutUser()
+                }}>
+                  <Nav.Link className='home__header__link'>
+                    <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                    Log out
                   </Nav.Link>
                 </Nav.Item>
               </Nav>
