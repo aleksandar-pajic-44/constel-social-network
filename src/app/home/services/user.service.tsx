@@ -65,6 +65,8 @@ export const likeOrUnlikePost = async (postId: string, isLiked: boolean): Promis
 **/
 export const getCommentsForPost = async (postId: string): Promise<PostComment[]> => {
   try {
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const response = await axiosInstance.get(`/posts/${postId}/comments`);
 
     if (response.status === 200 && response.data.status === "ok") {
